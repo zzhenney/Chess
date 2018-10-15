@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-var app = require('../term-project-team-b/app');
+var app = require('../app');
 var debug = require('debug')('chessgame:server');
 var http = require('http');
 
