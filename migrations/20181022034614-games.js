@@ -1,7 +1,6 @@
 'use strict';
 
 module.exports = {
-
   up: (queryInterface, Sequelize) => {
     /*
       Add altering commands here.
@@ -10,10 +9,10 @@ module.exports = {
       Example:
       return queryInterface.createTable('users', { id: Sequelize.INTEGER });
     */
-      return queryInterface.createTable(
-          'test_table',
+    return queryInterface.createTable(
+          'games',
           {
-              id: {
+              gameId: {
                 type: Sequelize.INTEGER,
                 primaryKey: true,
                 autoIncrement: true
@@ -23,9 +22,17 @@ module.exports = {
                   defaultValue: Sequelize.literal('NOW()'),
                   allowNull: false
               },
-              testString: {
-                type: Sequelize.STRING,
+              boardState: {
+                type: Sequelize.ARRAY(Sequelize.INTEGER),
                   allowNull: false
+              },
+              isNext: {
+                type: Sequelize.INTEGER,
+                allowNull: false
+              },
+              isWhite: {
+                type: Sequelize.INTEGER,
+                allowNull: false
               }
           }
       );
@@ -39,6 +46,6 @@ module.exports = {
       Example:
       return queryInterface.dropTable('users');
     */
-    return queryInterface.dropTable('test_table');
+    return queryInterface.dropTable('games');
   }
 };
