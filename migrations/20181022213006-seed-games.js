@@ -11,8 +11,8 @@ module.exports = {
     */
     var gameState = [0, 1, 3, 4, 6, 7];
     return queryInterface.bulkInsert('games', [
-      { boardState: gameState, isNext: 0, isWhite: 0},
-      { boardState: gameState, isNext: 1, isWhite: 0}
+      { boardState: gameState, isNext: 2, isWhite: 1},
+      { boardState: gameState, isNext: 4, isWhite: 3}
       ]);
   },
 
