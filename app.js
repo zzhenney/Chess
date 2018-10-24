@@ -1,4 +1,8 @@
-require('dotenv').load();
+if(process.env.NODE_ENV === 'development'){
+  require('dotenv').config();
+}
+
+//require('dotenv').load();
 
 var createError = require('http-errors');
 var express = require('express');
@@ -10,6 +14,9 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var testsRouter = require('./routes/tests');
+var loginRouter = require('./routes/login');
+var chessboardRouter = require('./routes/chessboard');
+
 console.log(indexRouter);
 
 var app = express();
@@ -23,10 +30,13 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist/css/'));
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/tests', testsRouter);
+app.use('/login', loginRouter);
+app.use('/chessboard', chessboardRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

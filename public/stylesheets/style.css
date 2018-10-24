@@ -1,8 +1,49 @@
 body {
-  padding: 50px;
+  padding: 0;
+  margin: 0;
   font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
 }
 
 a {
   color: #00B7FF;
+}
+
+.chesscontainer {
+  width: 100vw;
+  display: -webkit-flex;
+  display: flex;
+  -webkit-flex-wrap: wrap;
+  flex-wrap: wrap;
+  margin: auto;
+  border: 1px solid black;
+}
+
+.cell {
+  padding: 0;
+  margin: 0;
+}
+
+.black {
+  background-color: darkslategrey;
+}
+
+.white {
+  background-color: antiquewhite;
+}
+
+.square {
+  min-height: 12vw;
+  width: 12vw;
+}
+
+.chessboard-text {
+  min-height: 3vh;
+  width: 2%;
+  text-align: -moz-center;
+}
+
+.chessboard-bottom-text {
+  min-height: 3vh;
+  width: 12vw;
+  text-align: center;
 }
