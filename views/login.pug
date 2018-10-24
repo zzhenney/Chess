@@ -1,0 +1,8 @@
+extends layout
+
+block content
+	h1= "Login"
+	form(method='POST', action='/login')
+		input#username.form-control(type='text', placeholder='username', name='username')
+		input#password.form-control(type='text', placeholder='password', name='password')
+		button.btn.btn-primary(type='submit') Login
