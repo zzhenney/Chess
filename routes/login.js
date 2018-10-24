@@ -4,7 +4,7 @@ const db = require('../db');
 const passport = require('passport');
 
 router.get('/', (request, response) => {
-	response.render('login', { title: 'Express' });
+	res.render('login', { title: 'Express' });
 });
 
 router.post('/', 
