@@ -47,3 +47,8 @@ nbproject
 .project
 .settings
 composer.lock.env
+
+
+# Node_modules #
+################
+node_modules/
