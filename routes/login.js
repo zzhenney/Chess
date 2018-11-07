@@ -4,14 +4,14 @@ const db = require('../db');
 const passport = require('passport');
 
 router.get('/', (request, response) => {
-	response.render('login', { title: 'Express' });
+  response.render('login', { title: 'Express' });
 });
 
 /*
 router.post('/', (req, res) => {
 	console.log(req.body.username);
 	db.any('SELECT * FROM users WHERE username = $1', [req.body.username])
-		.then((user) => {			
+		.then((user) => {
 			console.log('USER: ', user);
 			res.redirect('/');
 		})
@@ -20,14 +20,17 @@ router.post('/', (req, res) => {
 			res.redirect('/tests');
 		})
 
-	
+
 });
 */
 
-	
-router.post('/', (req, res, next) => {
-	passport.authenticate('local', { successRedirect: '/', failureRedirect: '/', session: false})
-});
-
+router.post(
+  '/',
+  passport.authenticate('local', {
+    successRedirect: '/',
+    failureRedirect: '/',
+    session: false
+  })
+);
 
 module.exports = router;
