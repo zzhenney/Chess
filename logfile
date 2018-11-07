@@ -105,3 +105,7 @@
 2018-10-22 19:41:45.596 PDT [25575] STATEMENT:  insert into "active-games" ("gameId", "userId") values (1, (1,2));
 2018-10-22 19:48:31.601 PDT [25575] ERROR:  syntax error at or near "{" at character 60
 2018-10-22 19:48:31.601 PDT [25575] STATEMENT:  insert into "active-games" ("gameId", "userId") values (1, {1,2});
+2018-11-06 16:14:35.494 PST [35132] ERROR:  relation "test_table" does not exist at character 13
+2018-11-06 16:14:35.494 PST [35132] STATEMENT:  INSERT INTO test_table ( "testString") VALUES ('Hello at $(Date.now()')
+2018-11-06 16:15:10.385 PST [35149] ERROR:  relation "test_table" does not exist at character 13
+2018-11-06 16:15:10.385 PST [35149] STATEMENT:  INSERT INTO test_table ( "testString") VALUES ('Hello at $(Date.now()')
