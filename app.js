@@ -19,6 +19,8 @@ var chessboardRouter = require('./routes/chessboard');
 var registrationRouter = require('./routes/registration');
 var menuRouter = require('./routes/menu');
 var rulesRouter = require('./routes/rules');
+var chatRouter = require('./routes/chat');
+var scoreboardRouter = require('./routes/scoreboard');
 
 console.log(indexRouter);
 
@@ -42,7 +44,9 @@ app.use('/login', loginRouter);
 app.use('/chessboard', chessboardRouter);
 app.use('/registration', registrationRouter);
 app.use('/menu', menuRouter);
-app.use('/rules', rulesRouter)
+app.use('/rules', rulesRouter);
+app.use('/chat', chatRouter);
+app.use('/scoreboard', scoreboardRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

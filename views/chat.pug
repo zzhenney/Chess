@@ -1,0 +1,12 @@
+extends layout
+
+block content
+    div(align= 'center')
+        h1(align ='center') CHAT
+        .users
+        .chatWindow
+        form("msg"='')
+            input.msgfield(type='message', placeholder='Write a message')
+            br
+            center
+                input.sendbtn(type='submit', value='Send')
