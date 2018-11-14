@@ -1,3 +1,5 @@
+var chessgame = require('../chess-game/piece_moves.js')
+
 module.exports = {
     make_move: function(location, destination, player){
         if(this.isPlayersTurn){
@@ -8,10 +10,6 @@ module.exports = {
     validate_move: function(location, destination){
         
     },
-    isEnemyPieceAt(cord){
-
-    }
-    ,
     isPlayersTurn: function(playerID){
         return true
     },
@@ -43,7 +41,10 @@ module.exports = {
       return boardpices
     },
     getLegalMoves(cordX, cordY){
-
+        
+    },
+    isOutOfBounds(cordX,cordY){
+        return(cordX >= 0 && cordX < 8 && cordY >= 0 && cordY < 8)
     }
 
 }
