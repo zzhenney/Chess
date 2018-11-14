@@ -16,6 +16,9 @@ var usersRouter = require('./routes/users');
 var testsRouter = require('./routes/tests');
 var loginRouter = require('./routes/login');
 var chessboardRouter = require('./routes/chessboard');
+var registrationRouter = require('./routes/registration');
+var menuRouter = require('./routes/menu');
+var rulesRouter = require('./routes/rules');
 
 console.log(indexRouter);
 
@@ -37,6 +40,9 @@ app.use('/users', usersRouter);
 app.use('/tests', testsRouter);
 app.use('/login', loginRouter);
 app.use('/chessboard', chessboardRouter);
+app.use('/registration', registrationRouter);
+app.use('/menu', menuRouter);
+app.use('/rules', rulesRouter)
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

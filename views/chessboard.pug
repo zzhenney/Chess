@@ -1,156 +1,157 @@
 extends layout
 
 block content
+    // import scripts
     div.chesscontainer
-        // row 1
-        div.square.black
-            
-        div.square.white
-
-        div.square.black
-
-        div.square.white
-
-        div.square.black
-
-        div.square.white
-
-        div.square.black
-            
-        div.square.white
-
+        // row 1 (top to bottom)
+        div.square.black.highlight-border( class='divs')
+            img( id='A8' src='images/rBlack.png' draggable='true' ondragstart='drag(event)')
+        div.square.white( class='divs')
+            img( id='B8' src='images/kBlack.png')
+        div.square.black( class='divs')
+            img( id="C8" src='images/bBlack.png')
+        div.square.white( class='divs')
+            img( id="D8" src='images/qBlack.png')
+        div.square.black( class='divs')
+            img( id='E8' src='images/kingBlack.png')
+        div.square.white( class='divs')
+            img( id='F8' src='images/bBlack.png')
+        div.square.black( class='divs')
+            img( id='G8' src='images/kBlack.png')
+        div.square.white( class='divs')
+            img( id='H8' src='images/rBlack.png')
         div.chessboard-text 8
 
         // row 2 - change
-        div.square.white
-
-        div.square.black
-
-        div.square.white
-
-        div.square.black
-
-        div.square.white
-
-        div.square.black
-
-        div.square.white
-
-        div.square.black
-
+        div.square.white( class='divs')
+            img( id='A7' src='/images/pBlack.png')
+        div.square.black( class='divs')
+            img( id='B7' src='/images/pBlack.png')
+        div.square.white( class='divs')
+            img( id='C7' src='/images/pBlack.png')
+        div.square.black( class='divs')
+            img( id='D7' src='/images/pBlack.png')
+        div.square.white( class='divs')
+            img( id='E7' src='/images/pBlack.png')
+        div.square.black( class='divs')
+            img( id='F7' src='/images/pBlack.png')
+        div.square.white( class='divs')
+            img( id='G7' src='/images/pBlack.png')
+        div.square.black( class='divs')
+            img( id='H7' src='/images/pBlack.png')
         div.chessboard-text 7
 
         // row 3 - change
-        div.square.black
-
-        div.square.white
-
-        div.square.black
-
-        div.square.white
-
-        div.square.black
-
-        div.square.white
-
-        div.square.black
-
-        div.square.white
-
+        div.square.black( class='divs')
+            img( id='A6' src='' ondrop='drop(event)' ondrag='allowDrop(event)')
+        div.square.white( class='divs')
+            img( id='B6' src='')
+        div.square.black( class='divs')
+            img( id='C6' src='')
+        div.square.white( class='divs')
+            img( id='D6' src='')
+        div.square.black( class='divs')
+            img( id='E6' src='')
+        div.square.white( class='divs')
+            img( id='F6' src='')
+        div.square.black( class='divs')
+            img( id='G6' src='')
+        div.square.white( class='divs')
+            img( id='H6' src='')
         div.chessboard-text 6
 
         // row 4 - change
-        div.square.white
-                        
-        div.square.black
-                        
-        div.square.white
-                        
-        div.square.black
-                        
-        div.square.white
-                        
-        div.square.black
-                        
-        div.square.white
-                        
-        div.square.black
-
+        div.square.white( class='divs')
+            img( id='A5' src='')
+        div.square.black( class='divs')
+            img( id='B5' src='')
+        div.square.white( class='divs')
+            img( id='C5' src='')
+        div.square.black( class='divs')
+            img( id='D5' src='')
+        div.square.white( class='divs')
+            img( id='E5' src='')
+        div.square.black( class='divs')
+            img( id='F5' src='')
+        div.square.white( class='divs')
+            img( id='G5' src='')
+        div.square.black( class='divs')
+            img( id='H5' src='')
         div.chessboard-text 5
 
         // row 5 - change
-        div.square.black
-                        
-        div.square.white
-                        
-        div.square.black
-                        
-        div.square.white
-                        
-        div.square.black
-                                                               
-        div.square.white
-
-        div.square.black
-
-        div.square.white
-
+        div.square.black( class='divs')
+            img( id='A4' src='')
+        div.square.white( class='divs')
+            img( id='B4' src='')
+        div.square.black( class='divs')
+            img( id='C4' src='')
+        div.square.white( class='divs')
+            img( id='D4' src='')
+        div.square.black( class='divs')
+            img( id='E4' src='')
+        div.square.white( class='divs')
+            img( id='F4' src='')
+        div.square.black( class='divs')
+            img( id='G4' src='')
+        div.square.white( class='divs')
+            img( id='H4' src='')
         div.chessboard-text 4
             
         // row 6 - change
-        div.square.white
-
-        div.square.black
-
-        div.square.white
-
-        div.square.black
-
-        div.square.white
-
-        div.square.black
-
-        div.square.white
-                        
-        div.square.black
-
+        div.square.white( class='divs')
+            img( id='A3' src='')
+        div.square.black( class='divs')
+            img( id='B3' src='')
+        div.square.white( class='divs')
+            img( id='C3' src='')
+        div.square.black( class='divs')
+            img( id='D3' src='')
+        div.square.white( class='divs')
+            img( id='E3' src='')
+        div.square.black( class='divs')
+            img( id='F3' src='')
+        div.square.white( class='divs')
+            img( id='G3' src='')
+        div.square.black( class='divs')
+            img( id='H3' src='')
         div.chessboard-text 3
 
         // row 7 - change
-        div.square.black
-
-        div.square.white
-
-        div.square.black
-
-        div.square.white
-
-        div.square.black
-
-        div.square.white
-
-        div.square.black
-
-        div.square.white
-
+        div.square.black( class='divs')
+            img( id='A2' src='images/pWhite.png')
+        div.square.white( class='divs')
+            img( id='B2' src='images/pWhite.png')
+        div.square.black( class='divs')
+            img( id='C2' src='images/pWhite.png')
+        div.square.white( class='divs')
+            img( id='D2' src='images/pWhite.png')
+        div.square.black( class='divs')
+            img( id='E2' src='images/pWhite.png')
+        div.square.white( class='divs')
+            img( id='F2' src='images/pWhite.png')
+        div.square.black( class='divs')
+            img( id='G2' src='images/pWhite.png')
+        div.square.white( class='divs')
+            img( id='H2' src='images/pWhite.png')
         div.chessboard-text 2
         // row 8 - change
-        div.square.white
-
-        div.square.black
-
-        div.square.white
-
-        div.square.black
-
-        div.square.white
-
-        div.square.black
-
-        div.square.white
-
-        div.square.black
-
+        div.square.white( class='divs')
+            img( id='A1' src='images/rWhite.png')
+        div.square.black( class='divs')
+            img( id='B1' src='images/kWhite.png')
+        div.square.white( class='divs')
+            img( id='C1' src='images/bWhite.png')
+        div.square.black( class='divs')
+            img( id='D1' src='images/qWhite.png')
+        div.square.white( class='divs')
+            img( id='E1' src='images/kingWhite.png')
+        div.square.black( class='divs')
+            img( id='F1' src='images/bWhite.png')
+        div.square.white( class='divs')
+            img( id='G1' src='images/kWhite.png')
+        div.square.black( class='divs')
+            img( id='H1' src='images/rWhite.png')
         div.chessboard-text 1
 
         div.chessboard-bottom-text A

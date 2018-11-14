@@ -1,8 +1,29 @@
 extends layout
 
 block content
-  h1= title
-  p Welcome to #{title}
-  a( href='/login') LOG IN PAGE
-  p
-  a( href='/chessboard') LOAD CHESSBOARD
+
+
+  div.container-fluid( id='mainview')
+    div.row.align-items-top( id='mainrow' )
+      div.col-2
+        include menu.pug
+      div.col-8
+        include chessboard.pug
+      div.col-2
+        h3 CHAT
+
+  div
+    button.btn.btn-primary( data-toggle='modal' data-target='win/loss') Launch modal
+
+  div.model.fade( id='win/loss' tabindex='-1' role='dialog' aria-labelledby='outcomeLabel' aria-hidden='true')
+    div.modal-dialog( role='document')
+      div.modal-content
+        div.modal-header
+          h5.modal-title( id='modalLabel') Win/Loss
+          button( class='close' data-dismiss='modal' aria-label='Close')
+            span( aria-hidden='true') &times;
+
+        div.modal-body
+
+        div.modal-footer
+          button.btn.btn-secondary(data-dismiss='modal') Close

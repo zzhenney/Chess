@@ -34,16 +34,37 @@ a {
 .square {
   min-height: 12vw;
   width: 12vw;
+  display: flex;
+  align-items: center;
+  justify-content: center
+}
+
+.square.img {
+  width: 80%;
+  height: 80%;
 }
 
 .chessboard-text {
   min-height: 3vh;
   width: 2%;
-  text-align: -moz-center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .chessboard-bottom-text {
   min-height: 3vh;
   width: 12vw;
-  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.highlight-square {
+  background-color: yellow;
+}
+
+.highlight-border {
+  border-style: solid;
+  border-color: yellow;
 }

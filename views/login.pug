@@ -4,7 +4,7 @@ block content
     div( align='center')
         div.shadow-lg.p-3.m-b5.bg-white.rounded.card( align='center' style = 'width: 20rem;')
             img.card-img-top( src='/images/chesslogo.jpg' alt='Card image')
-            div.card-body()
+            div.card-body( )
                 h1.card-title( align='center') Sign In
                 form( method='post' action='/login')
                     div.form-group
@@ -19,6 +19,6 @@ block content
                     p
                     button.btn.btn-primary( type='submit') Sign In
                     p
-                    a( href='#' ) New? Register for free!
+                    a( href='/registration' ) New? Register for free!
                     p
                     p &copy 2018-2019
