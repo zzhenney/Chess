@@ -1,16 +1,23 @@
-require('dotenv').load();
+if (process.env.NODE_ENV === 'development') {
+  require('dotenv').config();
+}
 
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+const passport = require('./config/passport');
+var flash = require('connect-flash');
+//var session = require('express-session');
+//require('./config/passport')(passport);
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var gameRouter = require('./routes/game');
 var testsRouter = require('./routes/tests');
+var loginRouter = require('./routes/login');
+console.log('login router: ', loginRouter);
 console.log(indexRouter);
 
 var app = express();
@@ -25,10 +32,19 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
+//passport
+//app.use(session({secret: 'secret'}));
+app.use(passport.initialize());
+//app.use(passport.session());
+app.use(flash());
+
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/game', gameRouter);
 app.use('/tests', testsRouter);
+app.use('/login', loginRouter);
+
+//require('./app/routes.js')(app, passport);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
