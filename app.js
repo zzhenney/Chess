@@ -5,17 +5,17 @@ if (process.env.NODE_ENV === 'development') {
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
-var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-const passport = require('./config/passport');
 var flash = require('connect-flash');
-//var session = require('express-session');
+const passport = require('./config/passport');
+var session = require('express-session');
 //require('./config/passport')(passport);
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var testsRouter = require('./routes/tests');
 var loginRouter = require('./routes/login');
+var logoutRouter = require('./routes/logout');
 console.log('login router: ', loginRouter);
 console.log(indexRouter);
 
@@ -28,19 +28,22 @@ app.set('view engine', 'pug');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-//passport
-//app.use(session({secret: 'secret'}));
-app.use(passport.initialize());
-//app.use(passport.session());
+//express-session
+app.use(session(
+	{secret: '3jis89928uunia'}));
+
 app.use(flash());
+//passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/tests', testsRouter);
 app.use('/login', loginRouter);
+app.use('/logout', logoutRouter);
 
 //require('./app/routes.js')(app, passport);
 
@@ -59,5 +62,9 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+//helper functions (should probably move to diff file)
+
+
 
 module.exports = app;

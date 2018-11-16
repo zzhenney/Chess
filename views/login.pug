@@ -2,6 +2,13 @@ extends layout
 
 block content
 	h1= "Login"
+	#flash
+		if message
+			div.flashbox
+				p.message= message
+		else
+			div.flashbox
+				p.message
 	form(method='POST', action='/login')
 		input#username.form-control(type='text', placeholder='username', name='username')
 		input#password.form-control(type='text', placeholder='password', name='password')

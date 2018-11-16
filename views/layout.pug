@@ -4,4 +4,7 @@ html
     title= "chess"
     link(rel='stylesheet', href='/stylesheets/style.css')
   body
+    if loggedin
+       a(href="/logout") logout
     block content
+    
