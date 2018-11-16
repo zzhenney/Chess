@@ -16,6 +16,7 @@ var usersRouter = require('./routes/users');
 var testsRouter = require('./routes/tests');
 var loginRouter = require('./routes/login');
 var logoutRouter = require('./routes/logout');
+var registerRouter = require('./routes/register');
 console.log('login router: ', loginRouter);
 console.log(indexRouter);
 
@@ -44,6 +45,7 @@ app.use('/users', usersRouter);
 app.use('/tests', testsRouter);
 app.use('/login', loginRouter);
 app.use('/logout', logoutRouter);
+app.use('/register', registerRouter);
 
 //require('./app/routes.js')(app, passport);
 

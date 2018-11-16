@@ -3,7 +3,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const passport = require('passport');
 const db = require('../db');
 
-passport.use(
+passport.use('local-login',
   new LocalStrategy({
     passReqToCallback: true
   },
@@ -28,6 +28,43 @@ passport.use(
       })
   })
 );
+
+passport.use('local-signup',
+  new LocalStrategy({
+    passReqToCallback: true
+  },
+
+  function(request, username, password, done) {
+    db.any('SELECT * FROM users WHERE username = $1', [username])
+      .then(user => {
+        console.log('USER: ', user, `Pass: [${password}]`);
+        
+        if (user.length !== 0) {          
+          if(user[0].password === password){
+            console.log('login already registered user');
+            return done(null, false, request.flash('message', 'Username taken'));
+          }
+          return done(null, false, request.flash('message', 'Username taken'));
+          
+        }
+        else {
+          db.none('INSERT INTO users(username, password, wins, losses) VALUES($1, $2, $3, $4)',[username, password, 0, 0])
+            .then(() => {
+              return done(null, username);
+            })
+            .catch(error => {
+              return done(error);
+            })
+        }
+        //request.app.locals.loggedin = true; //move to tools/helpers
+        //return done(null, user[0]);
+      })
+      .catch(error => {
+        return done(error);
+      })
+  })
+);
+
 
 passport.serializeUser(function(user,done) {
   console.log("User id:", user.id);
