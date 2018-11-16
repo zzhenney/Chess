@@ -2,11 +2,15 @@ extends layout
 
 block content
   h1= "Team B"
-  p Welcome to Milestone 2
+  p Feature Test Page
 
   h2= "Route Tests"
+  a(href="/register") Register
+  br
+  p register above then check the database below
   a(href="/tests") Database Test
   br
-  a(href="/users") User Test
-  br
+  p login/start session with your new user account - use logout link to end session
   a(href="/login") Login Test
+  br
+  a(href="/users") User Test
