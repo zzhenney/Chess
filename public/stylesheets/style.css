@@ -110,3 +110,22 @@ h1, td, th {
 tr:nth-child(even) {
   background-color: #87CEEB;
 }
+
+#chat-message li {
+  padding: 12px;
+}
+
+.has-text-centered {
+  text-aligned: center !important;
+}
+
+.hero.is-success {
+  background-color: darkcyan;
+  color: antiquewhite;
+}
+
+.button.is-success {
+  background-color: darkcyan;
+  color: white;
+
+}

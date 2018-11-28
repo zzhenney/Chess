@@ -1,34 +1,43 @@
 extends layout
 
+mixin currentGames(id, action)
+    button.btn.btn-success.btn-sm.btn-block( id=id onclick=action) Game #{id}
+
+mixin viewGames(id, action)
+    button.btn.btn-warning.btn-sm.btn-block( id=id onclick=action) Game #{id}
+
 block content
     div( align='center' )
-        img( src='/images/chesslogo.jpg' width="150vw" height="100vw")
-    p
+        a(href='/')
+            img( src='/images/chesslogo.jpg' width="150vw" height="100vw")
+    br
     div
         p.font-weight-bold( align='center') Current Games
 
+    br
     div( id = 'current-games' )
-        button.btn.btn-success.btn-sm.btn-block( id='UniqueId' onclick=) Game 1
-        button.btn.btn-success.btn-sm.btn-block Game 2
-        button.btn.btn-success.btn-sm.btn-block Game 3
-    p
+        +currentGames("1", "#")
+        +currentGames("2", "#")
+        +currentGames("3", "#")
+        +currentGames("Test", "#")
 
+    br
     div
         p.font-weight-bold( align='center')  View Games
-
+    br
     div( id='view-games')
-        button.btn.btn-warning.btn-sm.btn-block Game 6
-        button.btn.btn-warning.btn-sm.btn-block Game 7
-        button.btn.btn-warning.btn-sm.btn-block Game 8
-    p
-
+        +viewGames("4", "#")
+        +viewGames("5", "#")
+        +viewGames("6", "#")
+    br
     div
-        button.btn.btn-danger.btn-sm.btn-block Quit Game
-    p
-
+        button.btn.btn-secondary.btn-sm.btn-block(id="scoreboardButton" onclick="window.open('/scoreboard','_top')") Scoreboard
+    br
     div
-        button.btn.btn-outline-dark.btn-sm.btn-block Rules
-    p
+        button.btn.btn-danger.btn-sm.btn-block(id="quitButton" onclick="window.open('/logout', '_top')") Quit Game
+    br
     div
-        button.btn.btn-outline-danger.btn-sm.btn-block Sign Out
-    p
+        button.btn.btn-outline-dark.btn-sm.btn-block(id="rulesButton" onclick="window.open('/rules','_top')") Rules
+    br
+    div
+        button.btn.btn-outline-danger.btn-sm.btn-block(id="signOutButton" onclick="window.open('/signout', '_top')") Sign Out
