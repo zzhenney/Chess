@@ -9,13 +9,13 @@ a {
 }
 
 .chesscontainer {
-  width: 100vw;
+  width: 70vw;
+  height: 50vw;
   display: -webkit-flex;
   display: flex;
   -webkit-flex-wrap: wrap;
   flex-wrap: wrap;
   margin: auto;
-  border: 1px solid black;
 }
 
 .cell {
@@ -32,8 +32,8 @@ a {
 }
 
 .square {
-  min-height: 12vw;
-  width: 12vw;
+  min-height: 8vw;
+  width: 8vw;
   display: flex;
   align-items: center;
   justify-content: center
@@ -54,7 +54,7 @@ a {
 
 .chessboard-bottom-text {
   min-height: 3vh;
-  width: 12vw;
+  width: 8vw;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -77,21 +77,21 @@ a {
   margin-bottom: 1em;
 }
 .chatWindow {
-  width: 94%;
-  height: 30em;
+  width: 100%;
+  height: 70vh;
   border: 0.1em solid #A9A9A9;
-  padding: 3%;
+  padding: 1%;
   margin-bottom: 1em;
 }
 .msgfield {
   width: 100%;
   height: 2em;
-  font-size: 1em;
+  font-size: 1vw;
   margin-bottom: 1em;
 }
 .sendbtn {
-  width: 50%;
-  font-size: 2em;
+  width: 10vh;
+  font-size: 1vw;
 }
 
 table {
@@ -100,8 +100,12 @@ table {
   border-collapse: collapse;
 }
 
-h1, td, th {
-  font-size: 2em;
+.chattitle {
+  font-size:1.2vw;
+}
+
+td, th {
+  font-size: 2vw;
   border: 1px solid #dddddd;
   text-align: center;
   padding: 8px;
@@ -128,4 +132,8 @@ tr:nth-child(even) {
   background-color: darkcyan;
   color: white;
 
+}
+
+.gamepiece {
+  width: 70%;
 }

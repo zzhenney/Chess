@@ -21,6 +21,7 @@ var menuRouter = require('./routes/menu');
 var rulesRouter = require('./routes/rules');
 var chatRouter = require('./routes/chat');
 var scoreboardRouter = require('./routes/scoreboard');
+var gameRouter = require('./routes/game');
 
 console.log(indexRouter);
 
@@ -47,6 +48,7 @@ app.use('/menu', menuRouter);
 app.use('/rules', rulesRouter);
 app.use('/chat', chatRouter);
 app.use('/scoreboard', scoreboardRouter);
+app.use('/game', gameRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

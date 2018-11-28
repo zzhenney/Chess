@@ -1,28 +1,13 @@
 extends layout
 
 block content
-    // grab the username from server
-    - const username = "Albert"
-
-    #chat-app
-        #chat.has-text-centered
-            section.hero.is-success
-                .hero-body
-                    .container-fluid
-                        h1.title Chat
-                        h2 << Subtitle for Chat >>
-            section.section.chat-container
-                .container-fluid
-                    .columns
-                        .box.column.is-8.is-offset-2
-                            h2.title Chess Chatbox
-                            .chat-messages.has-text-left
-                                ul#chat-messages
-                            form.chatform
-                                .field.has-addons
-                                    p.control
-                                        input(type='text', class='input', value=username, id='name')
-                                    p.control.is-expanded
-                                        input(type='text', class='input', placeholder='Enter your message', id='message')
-                                    p.control
-                                        input(type='submit' class='button is-success' value='Post')
+    div(align= 'center')
+        img( src='/images/chat.png' width="50vw" height="50vw")
+        .chattitle(align ='center') CHAT
+        .users
+        .chatWindow
+        form("msg"='')
+            input.msgfield(type='message', placeholder='Write a message')
+            br
+            center
+            input.sendbtn(type='submit', value='Send')
