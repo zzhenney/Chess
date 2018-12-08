@@ -17,7 +17,7 @@ var testsRouter = require('./routes/tests');
 var loginRouter = require('./routes/login');
 var logoutRouter = require('./routes/logout');
 var registerRouter = require('./routes/register');
-console.log('login router: ', loginRouter);
+
 console.log(indexRouter);
 
 var app = express();

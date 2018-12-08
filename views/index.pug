@@ -2,15 +2,40 @@ extends layout
 
 block content
   h1= "Team B"
-  p Feature Test Page
+  h2= "Route/Feature Tests"
+  p Register a new user
+  a(href="/register") 1. Register
+  br
+  p Check the database for newly created user
+  a(href="/tests") 2. Database Test
+  br
+  p Login/start session with your new user account
+  a(href="/login") 3. Login Test
+  br
+  p User Test link should only work if logged in. Otherwise redirect to login page
+  a(href="/users") 4. User Test
+  br
+  p Use logout link to end session
+  br
+  br
+  h4= "Chat Test"
+  ul#messages
+  form
+    input#m
+    button= "Send"
 
-  h2= "Route Tests"
-  a(href="/register") Register
-  br
-  p register above then check the database below
-  a(href="/tests") Database Test
-  br
-  p login/start session with your new user account - use logout link to end session
-  a(href="/login") Login Test
-  br
-  a(href="/users") User Test
+block scripts
+  script(src= "/socket.io/socket.io.js")
+  script(src= "https://code.jquery.com/jquery-1.11.1.js")
+  script.
+    $(function(){
+      var socket = io();
+      $('form').submit(function(){
+        socket.emit('chat message', $('#m').val());
+        $('#m').val('');
+        return false;
+      });
+      socket.on('chat message', function(msg){
+        $('#messages').append($('<li>').text(msg));
+      });
+    });
