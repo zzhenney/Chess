@@ -1,15 +1,18 @@
-var db = require('../db/index');
+'use strict';
+module.exports = (sequelize, DataTypes) => {
+  var users = sequelize.define('games', {
+    //id: sequelize.INTEGER,
+   // createAt: DataTypes.DATE,
+    username: DataTypes.STRING,
+    password: DataTypes.STRING,
+    wins: DataTypes.INTEGER,
+    losses: DataTypes.INTEGER
+  });
 
-var User = function(data){
-	this.data = data;
+  Game.associate = function(models) {
+    models.User.hasMany(models.games);
+  };
+
+  return users;
 };
 
-User.find = function(username) {
-	db.any("SELECT * FROM users WHERE username=$1",[username], function(err,rows){
-		if(err) return done(err);
-		done(null,rows);
-	});
-};
-
-
-module.exports = User;
