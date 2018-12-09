@@ -3,6 +3,7 @@ const LocalStrategy = require('passport-local').Strategy;
 const passport = require('passport');
 const db = require('../db');
 
+
 passport.use('local-login',
   new LocalStrategy({
     passReqToCallback: true
@@ -86,6 +87,7 @@ passport.deserializeUser(function(id,done) {
       return done(error);
     })
 });
+
 
 
 

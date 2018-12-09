@@ -12,7 +12,7 @@ module.exports = {
     return queryInterface.createTable(
           'games',
           {
-              gameId: {
+              id: {
                 type: Sequelize.INTEGER,
                 primaryKey: true,
                 autoIncrement: true
@@ -22,17 +22,13 @@ module.exports = {
                   defaultValue: Sequelize.literal('NOW()'),
                   allowNull: false
               },
-              boardState: {
-                type: Sequelize.ARRAY(Sequelize.INTEGER),
-                  allowNull: false
-              },
-              isNext: {
+              nextUserId: {
                 type: Sequelize.INTEGER,
-                allowNull: false
+                  allowNull: true
               },
-              isWhite: {
+              whiteUserId: {
                 type: Sequelize.INTEGER,
-                allowNull: false
+                allowNull: true
               }
           }
       );
