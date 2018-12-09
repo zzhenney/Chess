@@ -9,11 +9,11 @@ block content
                 form( method='post' action='/login')
                     div.form-group
                         //label( for='inputEmail') Username/Email:
-                        input.form-control( type='email' id='username' aria-describedby='emailHelp' placeholder='Enter email')
+                        input.form-control( name='username' type='text' id='username' aria-describedby='emailHelp' placeholder='Enter email')
                         small.form-text.text-muted( id='emailHelp') We'll never share your email with anyone else.
 
                     div.form-group
-                        input.form-control( type='password' id='userpassword' placeholder='Password')
+                        input.form-control(name='password' type='password' id='userpassword' placeholder='Password')
 
                     a( href='#') Forgot Password?
                     p
