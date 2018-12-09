@@ -137,3 +137,9 @@ tr:nth-child(even) {
 .gamepiece {
   width: 70%;
 }
+
+
+.flashbox {
+	height: 25px;
+}
+

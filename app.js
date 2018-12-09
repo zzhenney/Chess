@@ -2,19 +2,20 @@ if(process.env.NODE_ENV === 'development'){
   require('dotenv').config();
 }
 
-//require('dotenv').load();
-
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
-var cookieParser = require('cookie-parser');
 var logger = require('morgan');
-
+var flash = require('connect-flash');
+const passport = require('./config/passport');
+var session = require('./config/session');
+//require('./config/passport')(passport);
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var testsRouter = require('./routes/tests');
 var loginRouter = require('./routes/login');
+
 var chessboardRouter = require('./routes/chessboard');
 var registrationRouter = require('./routes/registration');
 var menuRouter = require('./routes/menu');
@@ -22,6 +23,10 @@ var rulesRouter = require('./routes/rules');
 var chatRouter = require('./routes/chat');
 var scoreboardRouter = require('./routes/scoreboard');
 var gameRouter = require('./routes/game');
+
+var logoutRouter = require('./routes/logout');
+var registerRouter = require('./routes/register');
+
 
 console.log(indexRouter);
 
@@ -34,14 +39,22 @@ app.set('view engine', 'pug');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist/css/'));
+
+//express-session
+app.use(session);
+
+app.use(flash());
+//passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/tests', testsRouter);
 app.use('/login', loginRouter);
+
 app.use('/chessboard', chessboardRouter);
 app.use('/registration', registrationRouter);
 app.use('/menu', menuRouter);
@@ -49,6 +62,12 @@ app.use('/rules', rulesRouter);
 app.use('/chat', chatRouter);
 app.use('/scoreboard', scoreboardRouter);
 app.use('/game', gameRouter);
+
+app.use('/logout', logoutRouter);
+app.use('/register', registerRouter);
+
+//require('./app/routes.js')(app, passport);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -65,5 +84,9 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+//helper functions (should probably move to diff file)
+
+
 
 module.exports = app;
