@@ -144,13 +144,18 @@ tr:nth-child(even) {
 }
 
 div.square.black{
-  background-size: 70px 70px;
+  background-size: 8vw 8vw;
   cursor: pointer;
+  background-repeat: no-repeat;
+  background-position: center;
+
 }
 
 div.square.white{
-  background-size: 70px 70px;
+  background-size: 8vw 8vw;
   cursor: pointer;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 
