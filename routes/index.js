@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-const createGame = require("../db/games");
+const Game = require("../db/games");
 //const passport = require('../config/passport');
 
 /* GET home page. */
@@ -9,7 +9,8 @@ router.get('/', function(req, res, next) {
   		const user = req.session.passport.user
   		console.log("request: " + req.session.passport);
   		console.log("user id: " + user);
-  		createGame(user);
+  		Game.createGame(user);
+  		Game.listGames();
 		res.render('index', { title: 'Express' });
 
 		
