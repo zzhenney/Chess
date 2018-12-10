@@ -1,4 +1,4 @@
-var board_interaction = require('./board_interaction.js')
+var board_interaction = require('./board.js')
 module.exports = {
     pawn_legal_moves: function(playerColor, cordX, cordY){
         let possibleMoves;

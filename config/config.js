@@ -3,14 +3,14 @@ require('dotenv').config();
 module.exports = {
   development: {
     use_env_variable: 'DATABASE_URL',
-    dialect: 'postgres'
+    dialect: 'mysql'
   },
   test: {
     use_env_variable: 'DATABASE_URL',
-    dialect: 'postgres'
+    dialect: 'mysql'
   },
   production: {
     use_env_variable: 'DATABASE_URL',
-    dialect: 'postgres'
+    dialect: 'mysql'
   }
 };
