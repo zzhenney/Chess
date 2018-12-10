@@ -6,14 +6,8 @@ const Game = require("../db/games");
 /* GET home page. */
 router.get('/', function(req, res, next) {
   if(req.isAuthenticated()){
-  		const user = req.session.passport.user
-  		console.log("request: " + req.session.passport);
-  		console.log("user id: " + user);
-  		Game.createGame(user);
-  		Game.listGames();
 		res.render('index', { title: 'Express' });
-
-		
+	
 	}
 	else{
 		res.redirect('/login');

@@ -14,12 +14,11 @@ module.exports = {
           {
               game_id: {
                 type: Sequelize.INTEGER,
-                model: {
-                            tableName: 'games',
-                            schema: 'static'
-                        },
-                        key: 'game_id',
-                        allowNull: false
+                  allowNull: false
+              },
+              user_id: {
+                type: Sequelize.INTEGER,
+                  allowNull: false
               },
               col: {
                 type: Sequelize.INTEGER,
@@ -31,12 +30,7 @@ module.exports = {
               },
               piece_id: {
                 type: Sequelize.INTEGER,
-                model: {
-                            tableName: 'pieces',
-                            schema: 'static'
-                        },
-                        key: 'piece_id',
-                        allowNull: false
+                  allowNull: false
                 
               },
               captured: {

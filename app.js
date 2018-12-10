@@ -27,6 +27,8 @@ var gameRouter = require('./routes/game');
 var logoutRouter = require('./routes/logout');
 var registerRouter = require('./routes/register');
 
+var gamesAPIRouter = require('./routes/api/game');
+
 
 console.log(indexRouter);
 
@@ -65,6 +67,8 @@ app.use('/game', gameRouter);
 
 app.use('/logout', logoutRouter);
 app.use('/register', registerRouter);
+
+app.use('/api', gamesAPIRouter);
 
 //require('./app/routes.js')(app, passport);
 
