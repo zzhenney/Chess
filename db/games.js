@@ -25,6 +25,10 @@ exports.joinGame = (userId, gameId) => {
 			if (data.length < 2) {
 				console.log("data: " + data);
 				db.one("INSERT into game_users VALUES($1, $2) RETURNING game_id", [gameId, userId])
+				db.none("INSERT INTO game_pieces SELECT $1, $2, default_col, default_row, id FROM pieces WHERE default_row IN (6,7)", [gameId, userId])
+					.catch(err =>{
+						console.log("10 DB Error: " + err);
+					})
 			}
 			else{
 				console.log("game full");
