@@ -19,6 +19,7 @@ exports.joinGame = (userId, gameId) => {
 	getGame(gameId)
 		.then(data => {
 			if (data.length < 2) {
+				console.log("data: " + data);
 				db.one("INSERT into game_users VALUES($1, $2) RETURNING game_id", [gameId, userId])
 			}
 			else{

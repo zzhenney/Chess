@@ -2,10 +2,10 @@ var express = require('express');
 var router = express.Router();
 
 router.get('/:id', (request, response) => {
-	if(req.isAuthenticated()){
-		const { id } = request.params;
+	if(request.isAuthenticated()){
+		const id = request.params.id;
 
-		response.render('games/index', { id });
+		response.render('game', {id});
 	}
 });
 
