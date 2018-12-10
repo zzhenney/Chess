@@ -23,6 +23,7 @@ var chatRouter = require('./routes/chat');
 var scoreboardRouter = require('./routes/scoreboard');
 var gameRouter = require('./routes/game');
 
+
 console.log(indexRouter);
 
 var app = express();
@@ -50,6 +51,7 @@ app.use('/chat', chatRouter);
 app.use('/scoreboard', scoreboardRouter);
 app.use('/game', gameRouter);
 
+
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   next(createError(404));
@@ -66,4 +68,6 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
+
 module.exports = app;
+
