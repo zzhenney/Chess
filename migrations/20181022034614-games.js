@@ -17,16 +17,16 @@ module.exports = {
                 primaryKey: true,
                 autoIncrement: true
               },
-              createAt: {
+              create_at: {
                 type: Sequelize.DATE,
                   defaultValue: Sequelize.literal('NOW()'),
                   allowNull: false
               },
-              nextUserId: {
+              next_user: {
                 type: Sequelize.INTEGER,
                   allowNull: true
               },
-              whiteUserId: {
+              white_user: {
                 type: Sequelize.INTEGER,
                 allowNull: true
               }

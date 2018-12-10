@@ -13,23 +13,23 @@ module.exports = {
           'game_users',
           {
               
-              gameId: {
+              game_id: {
                 type: Sequelize.INTEGER,
                 model: {
                             tableName: 'games',
                             schema: 'static'
                         },
-                        key: 'gameId',
+                        key: 'game_id',
                         allowNull: false
               
               },
-              userId: {
+              user_id: {
                 type: Sequelize.INTEGER,
                 model: {
                             tableName: 'users',
                             schema: 'static'
                         },
-                        key: 'userId',
+                        key: 'user_id',
                         allowNull: false
               }
           }       

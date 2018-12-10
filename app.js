@@ -42,10 +42,10 @@ app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist/css/'));
 
-//express-session
-app.use(session);
 
 app.use(flash());
+//express-session
+app.use(session);
 //passport
 app.use(passport.initialize());
 app.use(passport.session());
