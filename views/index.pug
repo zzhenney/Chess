@@ -1,12 +1,10 @@
 extends layout
 
 block content
-  h1= "Team B"
-  p Welcome to Milestone 2
+  div.container-fluid( id='mainview')
+    div.row.align-items-top( id='mainrow' )
+      div.col-2
+        include menu.pug
+      div.col-10
+        include chat.pug
 
-  h2= "Route Tests"
-  a(href="/tests") Database Test
-  br
-  a(href="/users") User Test
-  br
-  a(href="/login") Login Test

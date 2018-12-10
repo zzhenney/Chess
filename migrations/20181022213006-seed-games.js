@@ -10,8 +10,8 @@ module.exports = {
       return queryInterface.createTable('users', { id: Sequelize.INTEGER });
     */
     return queryInterface.bulkInsert('games', [
-      {nextUserId: 2, whiteUserId: 1},
-      {nextUserId: 4, whiteUserId: 3}
+      {next_user: 2, white_user: 1},
+      {next_user: 4, white_user: 3}
       ]);
   },
 

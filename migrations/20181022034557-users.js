@@ -12,32 +12,33 @@ module.exports = {
     return queryInterface.createTable(
           'users',
           {
-              id: {
-                type: Sequelize.INTEGER,
-                primaryKey: true,
-                autoIncrement: true
-              },
-              createAt: {
-                type: Sequelize.DATE,
-                  defaultValue: Sequelize.literal('NOW()'),
-                  allowNull: false
-              },
-              username: {
-                type: Sequelize.STRING,
-                  allowNull: false
-              },
-              password: {
-                type: Sequelize.STRING,
-                  allowNull: false
-              },
-              wins: {
-                type: Sequelize.INTEGER,
-                  allowNull: false
-              },
-              losses: {
-                type: Sequelize.INTEGER,
-                  allowNull: false
-              }
+            id: {
+
+              type: Sequelize.INTEGER,
+              primaryKey: true,
+              autoIncrement: true
+            },
+            create_at: {
+              type: Sequelize.DATE,
+                defaultValue: Sequelize.literal('NOW()'),
+                allowNull: false
+            },
+            username: {
+              type: Sequelize.STRING,
+                allowNull: false
+            },
+            password: {
+              type: Sequelize.STRING,
+                allowNull: false
+            },
+            wins: {
+              type: Sequelize.INTEGER,
+                allowNull: false
+            },
+            losses: {
+              type: Sequelize.INTEGER,
+                allowNull: false
+            }
           }
       );
   },

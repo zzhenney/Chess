@@ -4,7 +4,7 @@ const db = require('../db');
 const passport = require('passport');
 
 router.get('/', (request, response) => {
-  response.render('login', { title: 'Express' });
+  response.render('login', {message: request.flash('message')});
 });
 
 /*
@@ -26,11 +26,13 @@ router.post('/', (req, res) => {
 
 router.post(
   '/',
-  passport.authenticate('local', {
+  passport.authenticate('local-login', {
     successRedirect: '/',
-    failureRedirect: '/',
-    session: false
+    failureRedirect: '/login',
+    failureFlash: true,
+    session: true
   })
 );
 
 module.exports = router;
+

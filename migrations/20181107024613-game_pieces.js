@@ -12,13 +12,13 @@ module.exports = {
     return queryInterface.createTable(
           'game_pieces',
           {
-              gameId: {
+              game_id: {
                 type: Sequelize.INTEGER,
                 model: {
                             tableName: 'games',
                             schema: 'static'
                         },
-                        key: 'gameId',
+                        key: 'game_id',
                         allowNull: false
               },
               col: {
@@ -29,13 +29,13 @@ module.exports = {
                 type: Sequelize.INTEGER,
                 allowNull: false
               },
-              pieceId: {
+              piece_id: {
                 type: Sequelize.INTEGER,
                 model: {
                             tableName: 'pieces',
                             schema: 'static'
                         },
-                        key: 'pieceId',
+                        key: 'piece_id',
                         allowNull: false
                 
               },
