@@ -2,17 +2,20 @@ const db = require('./index');
 
 exports.createGame = userId => {
 	console.log("creating game " + userId);
-	db.one("INSERT into games(next_user, white_user) VALUES ($1, $1) RETURNING id", [userId])
+	return db.one("INSERT into games(next_user, white_user) VALUES ($1, $1) RETURNING id", [userId])
 		.then(data => {
 			console.log("game id: " + data.id);
-			db.none("INSERT INTO game_pieces SELECT $1, $2, default_col, default_row, id FROM pieces WHERE default_row IN (0,1)", [data.id, userId])
+			return db.none("INSERT INTO game_pieces SELECT $1, $2, default_col, default_row, id FROM pieces WHERE default_row IN (0,1)", [data.id, userId])
+				.then(() => {
+					return db.one("INSERT into game_users VALUES($1, $2) RETURNING game_id", [data.id, userId])		
+						.catch(err =>{
+							console.log("14 DB Error: " + err);
+						})
+				})
 				.catch(err =>{
 					console.log("10 DB Error: " + err);
 				})
-			db.one("INSERT into game_users VALUES($1, $2) RETURNING game_id", [data.id, userId])
-				.catch(err =>{
-					console.log("14 DB Error: " + err);
-				})
+			
 		})
 		.catch(err =>{
 			console.log("18 DB Error: " + err);
@@ -20,7 +23,7 @@ exports.createGame = userId => {
 };
 
 exports.joinGame = (userId, gameId) => {
-	getGame(gameId)
+ return	getGame(gameId)
 		.then(data => {
 			if (data.length < 2) {
 				console.log("data: " + data);
@@ -55,6 +58,17 @@ exports.listGames = () => {
 			console.log("46 Err: " + err);
 		})
 };
+
+exports.getGameInfo = gameId => {
+	return db.any("SELECT * FROM game_pieces WHERE game_id = $1", [gameId])
+		.then(data => {
+				console.log(data);
+				return data;
+		})
+		.catch(err => {
+			console.log("65 DB Err: " + err);
+		})
+}
 
 
 /*
