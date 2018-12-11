@@ -17,4 +17,12 @@ router.get('/api/joinGame/:id', (request, response) => {
 	}
 });
 
+router.get('/api/createGame', (request, response) => {
+	if(request.isAuthenticated()){
+		//const id = request.params.id;
+
+		response.redirect('/api/createGame');
+	}
+});
+
 module.exports = router;
