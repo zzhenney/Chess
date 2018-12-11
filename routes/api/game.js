@@ -9,7 +9,7 @@ router.get('/createGame', function(req, res, next) {
   		Game.createGame(user)
   			.then(id => {
   				//console.log("created game: " + id.game_id);
-  				io.emit('new game');
+  				//io.emit('new game');
   				res.redirect(`/game/${id.game_id}`);
   				//res.redirect("/users");
   				//init chat
