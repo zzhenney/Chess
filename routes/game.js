@@ -9,4 +9,12 @@ router.get('/:id', (request, response) => {
 	}
 });
 
+router.get('/api/joinGame/:id', (request, response) => {
+	if(request.isAuthenticated()){
+		const id = request.params.id;
+
+		response.redirect(`/api/joinGame/${id}`);
+	}
+});
+
 module.exports = router;
