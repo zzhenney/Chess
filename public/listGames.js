@@ -9,20 +9,24 @@ const appendGames = () => {
 		.then(response => {
 			console.log(response[0].game_id);
 			//document.getElementById('current-games').innerHTML = `button.btn.btn-success.btn-sm.btn-block#${response[0].game_id} Game ${response[0].game_id}`
+			//determines how many open games are shown, scroll bar should be used instead
+			response = response.slice(0, 5);
 			response.forEach(function(id){
 				var game = document.createElement('a');
-				game.innerHTML = id.game_id
+				game.innerHTML = "Game " + id.game_id
 				game.id = id.game_id
 				game.setAttribute('class', "btn btn-success btn-sm btn-block" )
 				game.href = `api/joinGame/${id.game_id}`
 				document.getElementById('current-games').appendChild(game)
 				console.log(id.game_id);
 			})
+
 			/*
 			document.querySelector('current-games').innerHTML = response
 			.map(game => `button.btn.btn-success.btn-sm.btn-block#${game.game_id} Game ${game.game_id}`)
 			*/
 		})
 }
+
 
 appendGames();
