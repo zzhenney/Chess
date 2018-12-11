@@ -50,9 +50,10 @@ const getGame = gameId => {
 
 //const leaveGame
 exports.listGames = () => {
-	db.any("SELECT game_id FROM game_users GROUP BY game_id HAVING COUNT(*) = 1")
+	return db.any("SELECT game_id FROM game_users GROUP BY game_id HAVING COUNT(*) = 1")
 		.then(data => {
 			console.log(data);
+			return data;
 		})
 		.catch(err => {
 			console.log("46 Err: " + err);
@@ -68,7 +69,7 @@ exports.getGameInfo = gameId => {
 		.catch(err => {
 			console.log("65 DB Err: " + err);
 		})
-}
+};
 
 
 /*

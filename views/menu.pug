@@ -20,9 +20,6 @@ block content
     br
     div( id = 'current-games' )
         +currentGames("1", "#")
-        +currentGames("2", "#")
-        +currentGames("3", "#")
-        +currentGames("Test", "#")
 
     br
     div
@@ -44,3 +41,7 @@ block content
     br
     div
         button.btn.btn-outline-danger.btn-sm.btn-block(id="signOutButton" onclick="window.open('/logout', '_top')") Sign Out
+
+block scripts
+    script(src="/listGames.js" type="module")
+        
