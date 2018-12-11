@@ -11,14 +11,14 @@ passport.use('local-login',
   function(request, username, password, done) {
     db.any('SELECT * FROM users WHERE username = $1', [username])
       .then(user => {
-        console.log('USER: ', user, `Pass: [${password}]`);
+        //console.log('USER: ', user, `Pass: [${password}]`);
 
         if (user.length === 0) {
-          console.log('User not found');
+          //console.log('User not found');
           return done(null, false, request.flash('message', 'Username not found'));
         }
         if (user[0].password !== password) {
-          console.log('Bad password');
+          //console.log('Bad password');
           return done(null, false, request.flash('message', 'Incorrect Password'));
         }
         request.app.locals.loggedin = true; //move to tools/helpers
@@ -38,11 +38,11 @@ passport.use('local-signup',
   function(request, username, password, done) {
     db.any('SELECT * FROM users WHERE username = $1', [username])
       .then(user => {
-        console.log('USER: ', user, `Pass: [${password}]`);
+        //console.log('USER: ', user, `Pass: [${password}]`);
         
         if (user.length !== 0) {          
           if(user[0].password === password){
-            console.log('login already registered user');
+            //console.log('login already registered user');
             return done(null, false, request.flash('message', 'Username taken'));
           }
           return done(null, false, request.flash('message', 'Username taken'));
@@ -68,19 +68,19 @@ passport.use('local-signup',
 
 
 passport.serializeUser(function(user,done) {
-  console.log("User id:", user.id);
+  //console.log("Serialize User id:", user.id);
   done(null,user.id);
 });
 
 passport.deserializeUser(function(id,done) {
   db.any('SELECT * FROM users WHERE id = $1', [id])
     .then(userId => {
-      console.log("Param id: ", id);
+      //console.log("Param id: ", id);
       if(userId[0].id !== id || userId.length === 0){
-        console.log("DS User id:", userId[0].id);
+        //console.log("DS User id:", userId[0].id);
         return done(null,false);
       }
-      console.log("Succes ds userid: ", userId[0].id);
+      //console.log("DeSerialize Success userId: ", userId[0].id);
       return done(null, userId);
     })
     .catch(error => {
