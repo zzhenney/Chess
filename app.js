@@ -28,6 +28,7 @@ var logoutRouter = require('./routes/logout');
 var registerRouter = require('./routes/register');
 
 var gamesAPIRouter = require('./routes/api/game');
+var chatAPIRouter = require('./routes/api/chat');
 
 
 console.log(indexRouter);
@@ -69,6 +70,7 @@ app.use('/logout', logoutRouter);
 app.use('/register', registerRouter);
 
 app.use('/api', gamesAPIRouter);
+app.use('/api/chat', chatAPIRouter);
 
 //require('./app/routes.js')(app, passport);
 

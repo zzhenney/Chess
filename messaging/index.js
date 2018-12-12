@@ -32,14 +32,14 @@ exports.initialize = function(server){
 			// broadcast the new message
 			io.sockets.emit('new_message', {message: data.message, username: socket.username});
 		})
-		//socket.on('chat message', function(msg){
-		//	console.log('message: ' + msg);
-		//	io.emit('chat message', msg);
-		//});
+		socket.on('chat message', function(msg){
+			console.log('message: ' + msg);
+			io.emit('chat message', msg);
+		});
 
-		//socket.on('disconnect', function() {
-		//	console.log('a user disconnected');
-		//});
+		socket.on('disconnect', function() {
+			console.log('a user disconnected');
+		});
 
 		
 	});

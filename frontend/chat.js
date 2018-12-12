@@ -1,4 +1,22 @@
 
+const io require('../../messaging');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 function chat() {
    //make connection
     const socket = io.connect('http://localhost:3800');
@@ -28,3 +46,5 @@ function chat() {
     });
 
 }
+
+
