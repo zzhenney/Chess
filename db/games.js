@@ -60,6 +60,17 @@ exports.listGames = () => {
 		})
 };
 
+exports.listCurrentGames = userId => {
+	return db.any("SELECT game_id FROM game_users WHERE user_id = $1",[userId])
+		.then(data => {
+			console.log(data);
+			return data;
+		})
+		.catch(err => {
+			console.log("46 Err: " + err);
+		})
+};
+
 exports.getGameInfo = gameId => {
 	return db.any("SELECT * FROM game_pieces WHERE game_id = $1", [gameId])
 		.then(data => {

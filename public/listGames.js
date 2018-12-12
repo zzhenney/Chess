@@ -4,7 +4,7 @@ import api from '/scripts/api/index.js';
 
 //io.on('new game', function(game))
 
-const appendGames = () => {
+const appendOpenGames = () => {
 	api.listGames()
 		.then(response => {
 			console.log(response[0].game_id);
@@ -28,5 +28,26 @@ const appendGames = () => {
 		})
 }
 
+const appendCurrentGames = () => {
+	api.listCurrentGames()
+		.then(response => {
+			response = response.slice(0, 5);
+			response.forEach(function(id){
+				var game = document.createElement('a');
+				game.innerHTML = "Game " + id.game_id
+				game.id = id.game_id
+				game.setAttribute('class', "btn btn-warning btn-sm btn-block" )
+				game.href = `game/${id.game_id}`
+				document.getElementById('view-games').appendChild(game)
+				console.log(id.game_id);
+			})
+		})
+}
 
-appendGames();
+const generateGameList = () => {
+	appendOpenGames();
+	appendCurrentGames();
+}
+
+
+generateGameList();

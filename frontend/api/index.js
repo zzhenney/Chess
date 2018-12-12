@@ -74,6 +74,16 @@ const listGames = () => {
 		})
 };
 
+const listCurrentGames = () => {
+	return request('/api/listCurrentGames')
+		.then(response => {
+			return response.json();
+		})
+		.catch(err => {
+			console.log("ERRROR " + err);
+		})
+}
+
 
 
 
@@ -88,7 +98,8 @@ export default {
 	createGame,
 	joinGame,
 	getGameInfo,
-	listGames
+	listGames,
+	listCurrentGames
 
 
 

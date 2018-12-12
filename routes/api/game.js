@@ -91,6 +91,29 @@ router.get('/listGames', function(req, res, next) {
 	}
 });
 
+router.get('/listCurrentGames/', function(req, res, next) {
+  if(req.isAuthenticated()){
+      const user = req.session.passport.user;
+      Game.listCurrentGames(user)
+        .then(games => {
+          //console.log("Open Games: " + games);
+          //res.send(games);
+          //console.log("res.json() " + res);
+          res.json(games);
+
+          //init chat
+          
+        })
+        .catch(err => {
+          //console.log("List Game API Route Err: " + err);
+          res.redirect("/");
+        })    
+  }
+  else{
+    res.redirect('/');
+  }
+});
+
 
 
 module.exports = router;
