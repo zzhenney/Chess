@@ -16,16 +16,30 @@ exports.initialize = function(server){
 	
 
 	io.on('connection', function(socket) {
+
 		console.log('!!!! USER CONNECTEDDDDDD !!!!!');
 
-		socket.on('chat message', function(msg){
-			console.log('message: ' + msg);
-			io.emit('chat message', msg);
+		// default username
+		socket.username = "Anonymous";
+
+		// listen on change_username
+		socket.on('change_username', (data) => {
+			socket.username = data.username
 		});
 
-		socket.on('disconnect', function() {
-			console.log('a user disconnected');
-		});
+		// listen on new_message
+		socket.on('new_message', (data) => {
+			// broadcast the new message
+			io.sockets.emit('new_message', {message: data.message, username: socket.username});
+		})
+		//socket.on('chat message', function(msg){
+		//	console.log('message: ' + msg);
+		//	io.emit('chat message', msg);
+		//});
+
+		//socket.on('disconnect', function() {
+		//	console.log('a user disconnected');
+		//});
 
 		
 	});

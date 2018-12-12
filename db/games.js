@@ -50,6 +50,7 @@ const getGame = gameId => {
 
 //const leaveGame
 exports.listGames = () => {
+
 	return db.any("SELECT game_id FROM game_users GROUP BY game_id HAVING COUNT(*) = 1")
 		.then(data => {
 			console.log(data);
@@ -80,10 +81,12 @@ exports.getGameInfo = gameId => {
 		.catch(err => {
 			console.log("65 DB Err: " + err);
 		})
+
 };
 
 exports.leaveGame = (gameId, userId) => {
 	db.none("DELETE FROM game_users WHERE game_id = $1 AND user_id = $2", [gameId, userId])
+
 }
 
 

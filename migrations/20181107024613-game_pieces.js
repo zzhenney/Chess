@@ -38,6 +38,11 @@ module.exports = {
                 defaultValue: false,
                 allowNull: false
               }
+              state: {
+                type: Sequelize.INTEGER,
+                defaultValue: 0,
+                allowNull: false
+              }
           }
       );
   },
