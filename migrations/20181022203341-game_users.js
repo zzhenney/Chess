@@ -15,22 +15,12 @@ module.exports = {
               
               game_id: {
                 type: Sequelize.INTEGER,
-                model: {
-                            tableName: 'games',
-                            schema: 'static'
-                        },
-                        key: 'game_id',
-                        allowNull: false
+                  allowNull: false
               
               },
               user_id: {
                 type: Sequelize.INTEGER,
-                model: {
-                            tableName: 'users',
-                            schema: 'static'
-                        },
-                        key: 'user_id',
-                        allowNull: false
+                  allowNull: false
               }
           }       
       );

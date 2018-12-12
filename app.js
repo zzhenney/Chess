@@ -28,6 +28,8 @@ var gameRouter = require('./routes/game');
 var logoutRouter = require('./routes/logout');
 var registerRouter = require('./routes/register');
 
+var gamesAPIRouter = require('./routes/api/game');
+
 
 console.log(indexRouter);
 
@@ -42,7 +44,7 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist/css/'));
-
+app.use('/scripts', express.static(__dirname + '/frontend'));
 
 app.use(flash());
 //express-session
@@ -67,6 +69,8 @@ app.use('/game', gameRouter);
 
 app.use('/logout', logoutRouter);
 app.use('/register', registerRouter);
+
+app.use('/api', gamesAPIRouter);
 
 //require('./app/routes.js')(app, passport);
 

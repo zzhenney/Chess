@@ -6,16 +6,12 @@ var games = models.games
 var users = models.users
 const db = require('../db');
 
-router.get('/all/', function (req, res, next) {
-  db.any('select * from games').then(function (data) {
-    console.log(data)
-    res.status(200)
-      .json({
-        status: 'success',
-        data: data,
-        message: 'Retrieved list of all games'
-      });
-  })
+router.get('/:id', (request, response) => {
+	if(request.isAuthenticated()){
+		const id = request.params.id;
+
+		response.render('game', {id});
+	}
 });
 router.get('/getpieces/:id', function (req, res, next) {
   console.log(req.param.gameId)
@@ -52,5 +48,23 @@ router.post('/move/:gameId/', function (req, res, next) {
   }
   res.send("Hi")
 });
+
+/*
+router.get('/api/joinGame/:id', (request, response) => {
+	if(request.isAuthenticated()){
+		const id = request.params.id;
+
+		response.redirect(`/api/joinGame/${id}`);
+	}
+});
+
+router.get('/api/createGame', (request, response) => {
+	if(request.isAuthenticated()){
+		//const id = request.params.id;
+
+		response.redirect('/api/createGame');
+	}
+});
+*/
 
 module.exports = router;
