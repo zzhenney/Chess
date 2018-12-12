@@ -12,6 +12,7 @@ router.get('/:id', (request, response) => {
 
 		response.render('game', {id});
 	}
+
 });
 router.get('/getpieces/:id', function (req, res, next) {
   console.log(req.param.gameId)
@@ -64,6 +65,7 @@ router.get('/api/createGame', (request, response) => {
 
 		response.redirect('/api/createGame');
 	}
+
 });
 */
 

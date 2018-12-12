@@ -1,13 +1,30 @@
 extends layout
 
+mixin chatMessage(user, message)
+    div
+        b #{user}:
+        | #{message}
+
 block content
-    div(align= 'center')
-        img( src='/images/chat.png' width="50vw" height="50vw")
-        .chattitle(align ='center') CHAT
-        .users
+    - const username = "Albert";
+    - const username2 = "Larry";
+
+    script
+        include ../frontend/chat.js
+
+    div.chatContainer(align= 'center')
+        .chatTitleContainer
+            img( src='/images/chat.png' width="50vw" height="50vw")
+            .chattitle(align ='center') CHAT
+
         .chatWindow
-        form("msg"='')
+            ul.chatmessages(id="chatMessages")
+                +chatMessage(username, "Hello There!")
+                +chatMessage(username2, "Hi, how's it going?")
+
+
+        form(method='POST' action="chat()" )
             input.msgfield(type='message', placeholder='Write a message')
             br
             center
-            input.sendbtn(type='submit', value='Send')
+            input.sendbtn(type='submit', value='POST')
