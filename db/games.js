@@ -82,6 +82,10 @@ exports.getGameInfo = gameId => {
 		})
 };
 
+exports.leaveGame = (gameId, userId) => {
+	db.none("DELETE FROM game_users WHERE game_id = $1 AND user_id = $2", [gameId, userId])
+}
+
 
 /*
 exports.joinGame = (userId, gameId) => {

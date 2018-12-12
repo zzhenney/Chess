@@ -30,15 +30,11 @@ block content
     div
         button.btn.btn-secondary.btn-sm.btn-block(id="scoreboardButton" onclick="window.open('/scoreboard','_top')") Scoreboard
     br
-    div
-        button.btn.btn-danger.btn-sm.btn-block(id="quitButton" onclick="window.open('/logout', '_top')") Quit Game
+    div( id='quitGame')
+
     br
     div
         button.btn.btn-outline-dark.btn-sm.btn-block(id="rulesButton" onclick="window.open('/rules','_top')") Rules
     br
     div
         button.btn.btn-outline-danger.btn-sm.btn-block(id="signOutButton" onclick="window.open('/logout', '_top')") Sign Out
-
-block scripts
-    script(src="/listGames.js" type="module")
-        

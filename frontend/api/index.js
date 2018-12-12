@@ -84,6 +84,9 @@ const listCurrentGames = () => {
 		})
 }
 
+const leaveGame = gameId => {
+	request(`/api/leaveGame/${gameId}`)
+}
 
 
 
@@ -99,7 +102,8 @@ export default {
 	joinGame,
 	getGameInfo,
 	listGames,
-	listCurrentGames
+	listCurrentGames,
+	leaveGame
 
 
 

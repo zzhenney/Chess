@@ -2,6 +2,7 @@ doctype html
 html
   head
     title= title
+    input#game-id(type="hidden", value=id)
     link(rel='stylesheet', href='/bootstrap/bootstrap.css')
     link(rel='stylesheet', href='https://cdnjs.cloudflare.com/ajax/libs/bulma/0.5.2/css/bulma.css')
     link(rel='stylesheet', href='/stylesheets/style.css')
@@ -12,3 +13,4 @@ html
     block content
 
     block scripts
+      script(src="/listGames.js" type="module")

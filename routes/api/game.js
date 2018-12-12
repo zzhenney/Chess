@@ -114,6 +114,24 @@ router.get('/listCurrentGames/', function(req, res, next) {
   }
 });
 
+router.get('/leaveGame/:id', function(req, res, next) {
+  if(req.isAuthenticated()){
+      const user = req.session.passport.user;
+      const game = req.params.id;
+      Game.leaveGame(game, user)
+      res.redirect('/')
+
+        
+        .catch(err => {
+          console.log("Leave Game API Route Err: " + err);
+          //res.redirect("/");
+        })    
+  }
+  else{
+    res.redirect('/');
+  }
+});
+
 
 
 module.exports = router;

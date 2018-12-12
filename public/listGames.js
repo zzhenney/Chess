@@ -44,9 +44,22 @@ const appendCurrentGames = () => {
 		})
 }
 
+const appendQuitGame = () => {
+	var element = document.createElement('a');
+	const gameId = document.getElementById('game-id').value
+
+	element.innerHTML = "Quit Game"
+	element.setAttribute('class', "btn btn-danger btn-sm btn-block" )
+	//element.addEventListener("click", quitGame(gameId))
+	element.href = `/api/leaveGame/${gameId}`
+	document.getElementById('quitGame').appendChild(element)
+}
+
+
 const generateGameList = () => {
 	appendOpenGames();
 	appendCurrentGames();
+	appendQuitGame();
 }
 
 
