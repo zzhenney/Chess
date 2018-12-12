@@ -16,7 +16,7 @@ const appendOpenGames = () => {
 				game.innerHTML = "Game " + id.game_id
 				game.id = id.game_id
 				game.setAttribute('class', "btn btn-success btn-sm btn-block" )
-				game.href = `api/joinGame/${id.game_id}`
+				game.href = `/api/joinGame/${id.game_id}`
 				document.getElementById('current-games').appendChild(game)
 				console.log(id.game_id);
 			})
@@ -37,7 +37,7 @@ const appendCurrentGames = () => {
 				game.innerHTML = "Game " + id.game_id
 				game.id = id.game_id
 				game.setAttribute('class', "btn btn-warning btn-sm btn-block" )
-				game.href = `game/${id.game_id}`
+				game.href = `/game/${id.game_id}`
 				document.getElementById('view-games').appendChild(game)
 				console.log(id.game_id);
 			})

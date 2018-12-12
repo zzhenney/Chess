@@ -9,6 +9,7 @@ router.get('/:id', (request, response) => {
 	}
 });
 
+/*
 router.get('/api/joinGame/:id', (request, response) => {
 	if(request.isAuthenticated()){
 		const id = request.params.id;
@@ -24,5 +25,6 @@ router.get('/api/createGame', (request, response) => {
 		response.redirect('/api/createGame');
 	}
 });
+*/
 
 module.exports = router;
