@@ -91,8 +91,5 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-//helper functions (should probably move to diff file)
-
-
-
 module.exports = app;
+

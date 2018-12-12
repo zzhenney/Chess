@@ -39,6 +39,8 @@ a {
   justify-content: center
 }
 
+
+
 .square.img {
   width: 80%;
   height: 80%;
@@ -63,6 +65,13 @@ a {
 .highlight-square {
   background-color: yellow;
 }
+
+.square:hover {
+  border-color: yellow;
+  border-style: solid;
+
+}
+
 
 .highlight-border {
   border-style: solid;
@@ -134,12 +143,20 @@ tr:nth-child(even) {
 
 }
 
-.gamepiece {
-  width: 70%;
+div.square.black{
+  background-size: 8vw 8vw;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-position: center;
+
+}
+
+div.square.white{
+  background-size: 8vw 8vw;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 
-.flashbox {
-	height: 25px;
-}
 
