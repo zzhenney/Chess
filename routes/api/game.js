@@ -45,7 +45,7 @@ router.get('/joinGame/:id', function(req, res, next) {
   			})  	
 	}
 	else{
-		res.redirect('/');
+		res.redirect('/login');
 	}
 });
 
@@ -87,7 +87,7 @@ router.get('/listGames', function(req, res, next) {
   			})  	
 	}
 	else{
-		res.redirect('/');
+		res.redirect('/login');
 	}
 });
 
@@ -110,7 +110,7 @@ router.get('/listCurrentGames/', function(req, res, next) {
         })    
   }
   else{
-    res.redirect('/');
+    res.redirect('/login');
   }
 });
 
@@ -128,7 +128,7 @@ router.get('/leaveGame/:id', function(req, res, next) {
         })    
   }
   else{
-    res.redirect('/');
+    res.redirect('/login');
   }
 });
 
