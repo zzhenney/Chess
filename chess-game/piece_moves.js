@@ -1,5 +1,28 @@
-var board_interaction = require('./board.js')
+var board = require('./board.js')
 module.exports = {
+
+    pawn_enPassant: function(colum, row, iswhite, gameId){
+        if(board.notOutOfBounds(colum, row)){
+            board.getPieceAt(gameId, colum, row).then(piece=>{
+                if(piece.name === 'pawn' && piece.state === 2 && !iswhite){
+                    return [colum, row]
+                }else{
+                    return null
+                }
+            })
+        } 
+        return null
+    },
+
+
+
+
+
+
+
+
+
+
     pawn_legal_moves: function(playerColor, cordX, cordY){
         let possibleMoves;
         if(board_interaction.tileIsEmpty(cordX, cordY+1)){
