@@ -50,7 +50,7 @@ module.exports = {
             return this.check_path_blocked_stright(fromX, fromY, toX, toY)
         }
     },
-  /*  check_path_open_stright: function(fromX, fromY, toX, toY){
+   check_path_open_stright: function(fromX, fromY, toX, toY){
         if(fromY == toY && fromX != toX){
             let differenceX = fromX - toX
             if(differenceX >= 0){
@@ -77,7 +77,7 @@ module.exports = {
             }
             return true
         }
-    },*/
+    },
     check_path_open_stright: function(fromX, fromY, toX, toY){
         let differenceX = fromX - toX
         let differenceY = fromY - toY
