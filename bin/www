@@ -7,12 +7,13 @@
 var app = require('../app');
 var debug = require('debug')('chessgame:server');
 var http = require('http');
+var socketIO = require('../messaging');
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || '3800');
 app.set('port', port);
 
 /**
@@ -20,6 +21,8 @@ app.set('port', port);
  */
 
 var server = http.createServer(app);
+
+var io = socketIO.initialize(server);
 
 /**
  * Listen on provided port, on all network interfaces.

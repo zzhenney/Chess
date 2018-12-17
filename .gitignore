@@ -47,11 +47,12 @@ nbproject
 .project
 .settings
 composer.lock.env
-<<<<<<< HEAD
+
 
 
 # Node_modules #
 ################
-node_modules/
 .vscode/
+node_modules/
+
 

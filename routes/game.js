@@ -1,10 +1,34 @@
 var express = require('express');
 var router = express.Router();
-var helpers = require('../gameLogic/helpers')
 
-/* GET users listing. */
-router.get('/get-game-state/:gameId', function(req, res, next) {
-  res.send(helpers.convert1D(req.params.gameId, req.params.gameId));
+
+router.get('/:id', (request, response) => {
+	if(request.isAuthenticated()){
+		const id = request.params.id;
+
+		response.render('game', {id});
+	}
+
 });
 
+/*
+router.get('/api/joinGame/:id', (request, response) => {
+	if(request.isAuthenticated()){
+		const id = request.params.id;
+
+		response.redirect(`/api/joinGame/${id}`);
+	}
+});
+
+router.get('/api/createGame', (request, response) => {
+	if(request.isAuthenticated()){
+		//const id = request.params.id;
+
+		response.redirect('/api/createGame');
+	}
+
+});
+*/
+
 module.exports = router;
+

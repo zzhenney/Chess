@@ -12,27 +12,23 @@ module.exports = {
     return queryInterface.createTable(
           'games',
           {
-              gameId: {
+              id: {
                 type: Sequelize.INTEGER,
                 primaryKey: true,
                 autoIncrement: true
               },
-              createAt: {
+              create_at: {
                 type: Sequelize.DATE,
                   defaultValue: Sequelize.literal('NOW()'),
                   allowNull: false
               },
-              boardState: {
-                type: Sequelize.ARRAY(Sequelize.INTEGER),
-                  allowNull: false
-              },
-              isNext: {
+              next_user: {
                 type: Sequelize.INTEGER,
-                allowNull: false
+                  allowNull: true
               },
-              isWhite: {
+              white_user: {
                 type: Sequelize.INTEGER,
-                allowNull: false
+                allowNull: true
               }
           }
       );

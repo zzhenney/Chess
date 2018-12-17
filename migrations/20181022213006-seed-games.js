@@ -9,10 +9,9 @@ module.exports = {
       Example:
       return queryInterface.createTable('users', { id: Sequelize.INTEGER });
     */
-    var gameState = [0, 1, 3, 4, 6, 7];
     return queryInterface.bulkInsert('games', [
-      { boardState: gameState, isNext: 2, isWhite: 1},
-      { boardState: gameState, isNext: 4, isWhite: 3}
+      {next_user: 2, white_user: 1},
+      {next_user: 4, white_user: 3}
       ]);
   },
 

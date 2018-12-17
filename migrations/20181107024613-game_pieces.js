@@ -12,14 +12,13 @@ module.exports = {
     return queryInterface.createTable(
           'game_pieces',
           {
-              gameId: {
+              game_id: {
                 type: Sequelize.INTEGER,
-                model: {
-                            tableName: 'games',
-                            schema: 'static'
-                        },
-                        key: 'gameId',
-                        allowNull: false
+                  allowNull: false
+              },
+              user_id: {
+                type: Sequelize.INTEGER,
+                  allowNull: false
               },
               col: {
                 type: Sequelize.INTEGER,
@@ -29,19 +28,19 @@ module.exports = {
                 type: Sequelize.INTEGER,
                 allowNull: false
               },
-              pieceId: {
+              piece_id: {
                 type: Sequelize.INTEGER,
-                model: {
-                            tableName: 'pieces',
-                            schema: 'static'
-                        },
-                        key: 'pieceId',
-                        allowNull: false
+                  allowNull: false
                 
               },
               captured: {
                 type: Sequelize.BOOLEAN,
                 defaultValue: false,
+                allowNull: false
+              },
+              state: {
+                type: Sequelize.INTEGER,
+                defaultValue: 0,
                 allowNull: false
               }
           }
