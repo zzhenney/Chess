@@ -16,10 +16,10 @@ const tryMakeMove = async (piece, tocolum, torow) =>{
 }
 
 const getPieceFromDB = async (gameId, column, row) =>{
-    return db.oneOrNone('select * from game_pieces left join pieces on game_pieces."pieceId" = pieces.id left join games on game_pieces."gameId" =  games."gameId" where game_pieces."gameId" = $1 and game_pieces."col" = $2 and game_pieces."row" = $3', [gameId, column, row])
+    return db.oneOrNone('select * from game_pieces left join pieces on game_pieces."piece_id" = pieces.id left join games on game_pieces."game_id" =  games."game_id" where game_pieces."game_id" = $1 and game_pieces."col" = $2 and game_pieces."row" = $3', [gameId, column, row])
 }
 const makePieceObject = async (data) =>{
-    return { name: data["name"], col: data["col"], row: data["row"], isWhite: (data["whiteUserId"] == data["id"]), state: 0, pieceId: data["pieceId"] }
+    return { name: data["name"], col: data["col"], row: data["row"], isWhite: (data["whiteUserId"] == data["id"]), state: 0, piece_id: data["piece_id"] }
 }
 const getPieceData = async (gameId, column, row) =>{
     return getPieceFromDB(gameId, column, row)
@@ -31,13 +31,13 @@ const pieceIsEnemy = (piece, targetPiece) =>{
 const moveAttack = async (game_id, piece, targetPiece) =>{
     db.tx(t => {
         return t.batch([
-            t.none('update game_pieces set col = NULL, row = NULL where "gameId" = $1 and "pieceId" = $2', [game_id, targetPiece.pieceId]),
-            t.none('update game_pieces set col = $3, row = $4 where "gameId" = $1 and "pieceId" = $2', [game_id, piece.pieceId, targetPiece.col, targetPiece.row])
+            t.none('update game_pieces set col = NULL, row = NULL where "game_id" = $1 and "piece_id" = $2', [game_id, targetPiece.piece_id]),
+            t.none('update game_pieces set col = $3, row = $4 where "game_id" = $1 and "piece_id" = $2', [game_id, piece.piece_id, targetPiece.col, targetPiece.row])
         ])
     })
 }
 const move = async (game_id, piece, tocolumn, torow) =>{
-    db.none('update game_pieces set col = $3, row = $4 where "gameId" = $1 and "pieceId" = $2',[game_id, piece.pieceId, tocolumn, torow])
+    db.none('update game_pieces set col = $3, row = $4 where "gameId" = $1 and "piece_id" = $2',[game_id, piece.piece_id, tocolumn, torow])
     .then(()=>{
         return true;
     }).catch(()=>{
@@ -63,7 +63,7 @@ const tilesisBlocked = async (game_id, tileCords) =>{
 }
 
 const getAllPieces = async (forGameId) =>{
-    return db.any('select * from  game_pieces left join pieces on game_pieces."pieceId" = pieces."id" where game_pieces."gameId" = $1', forGameId)
+    return db.any('select * from  game_pieces left join pieces on game_pieces."piece_id" = pieces."id" where game_pieces."game_id" = $1', forGameId)
 }
 
 const possibleMoves = async (game_id, cordX, cordY) =>{
@@ -78,30 +78,25 @@ module.exports = {
     },
     movePiece: async function (game_id, fromcolumn, fromrow, tocolumn, torow) {
         let piece = await getPieceData(game_id, fromcolumn, fromrow); if (!piece) return false;
-        console.log(piece)
         let isValid = await tryMakeMove(piece,tocolumn,torow)
         let pieceAtTarget = await getPieceData(game_id, tocolumn, torow) 
         if(pieceAtTarget){
             if (!pieceIsEnemy(piece, pieceAtTarget)) return false;
             let attackSucess = await moveAttack(game_id, piece, pieceAtTarget) 
-            console.log(attackSucess)
         }
         let moveSuccess = await move(game_id,piece,tocolumn,torow)
         return moveSuccess
     },
     makeAttack: function (piece, tocolum, torow) {
-        db.one('update game_pieces set col = $3, row = $4 where "gameId" = $1 and "pieceId" = $2', piece.gameId, piece.pieceId, tocolum, torow).then(function (data) {
+        db.one('update game_pieces set col = $3, row = $4 where "game_id" = $1 and "piece_id" = $2', piece.gameId, piece.piece_id, tocolum, torow).then(function (data) {
             var piece = { name: data["name"], col: data["col"], row: data["row"], isWhite: (data["whiteUserId"] == data["id"]), state: 0 }
             return piece
         }).catch(err => {
             console.log(err)
         });
     },
-    isEnemyPieceAt: function (cordX, cordY) {
-        return 1
-    },
     getAllPossibleForPiece: async function (gameId, column, row) {
-        return possibleMoves(gameId, column, row)
+        return await possibleMoves(gameId, column, row)
     },
     isOutOfBounds: function (cordX, cordY) {
         return (cordX >= 0 && cordX < 8 && cordY >= 0 && cordY < 8)

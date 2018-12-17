@@ -16,7 +16,7 @@ router.get('/:id', (request, response) => {
 
 });
 router.get('/getpieces/:id', function (req, res, next) {
-  db.any('select * from  game_pieces left join pieces on game_pieces."pieceId" = pieces."id" where game_pieces."gameId" = $1', req.params.id
+  db.any('select * from  game_pieces left join pieces on game_pieces."piece_id" = pieces."id" where game_pieces."gameId" = $1', req.params.id
   ).then(function (data) {
     console.log(data)
     res.status(200)
