@@ -52,7 +52,6 @@ module.exports = {
         return getPathRoute(fromCol, fromRow, toCol, toRow)
     },
     getPosibleMovesPawn: async function (piece) {
-        console.log("Getting moves pawn")
         var posibleMoves = [];
         var direction = (piece.isWhite)? 1 : -1
         pieceState = 1

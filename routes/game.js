@@ -18,7 +18,6 @@ router.get('/:id', (request, response) => {
 router.get('/getpieces/:id', function (req, res, next) {
   db.any('select * from  game_pieces left join pieces on game_pieces."piece_id" = pieces."id" where game_pieces."gameId" = $1', req.params.id
   ).then(function (data) {
-    console.log(data)
     res.status(200)
       .json({
         status: 'success',
@@ -31,18 +30,13 @@ router.get('/getpieces/:id', function (req, res, next) {
 });
 
 router.post('/makemove', function (req, res, next) {
-  console.log(req)
   let message = "";
-  console.log("/makemoves/ called")
-  console.log("Recived from col: ", req.body.fromcol)
   if ( true ||req.body.fromcol && req.body.fromrow && req.body.tocol && req.body.torow && req.body.gameid) {
-    console.log("---")
     const gameid = req.body.gameid
     const fromcol = req.body.fromcol
     const fromrow = req.body.fromrow
     const tocol = req.body.tocol
     const torow = req.body.torow
-    console.log(gameid, fromcol, fromrow, tocol, torow)
 
     let success = board.movePiece(gameid, fromcol, fromrow, tocol, torow)
       .then(function (success) {;
@@ -56,11 +50,7 @@ router.post('/makemove', function (req, res, next) {
         console.log(err)
       })
   }else{
-    for(const key in req.query){
-      console.log(key, req.query[key])
-    }
     message = "Did not recive the nessesary parameters"
-    console.log(message)
     res.status(500)
           .json({
             status: 'Failure',
@@ -74,7 +64,6 @@ router.post('/makemove', function (req, res, next) {
 
 router.post('/moves', function (req, res, next) {
   let message = "";
-  console.log("/moves/ called")
   if (req.body.col && req.body.row && req.body.gameid) {
     let legalMoves = board.getAllPossibleForPiece(1, 1, 2)
       .then(function (legalMoves) {
@@ -89,9 +78,6 @@ router.post('/moves', function (req, res, next) {
         console.log(err)
       })
   }else{
-    for(const key in req.query){
-      console.log(key, req.query[key])
-    }
     message = "Did not recive the nessesary parameters"
     console.log(message)
     res.status(500)

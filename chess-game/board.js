@@ -7,9 +7,7 @@ const validatePossibleMove = async (possibleMoves, tocolum, torow) => {
     let found = (possibleMoves.find(function (possiblemove) {
         return (possiblemove[0] == tocolum && possiblemove[1] == torow)
     }))
-    console.log("Found: ", found)
     if(found){
-        console.log("Validmove returning: ", found[2])
         return found[2]
     }
 }
@@ -17,9 +15,7 @@ const validatePossibleMove = async (possibleMoves, tocolum, torow) => {
 const tryMakeMove = async (piece, tocolum, torow) =>{
     boardData = await getAllPieces(3); if(!boardData) return false;
     let possibleMovesForPiece = await moves.getAllLegalMoves(piece, boardData); if(!possibleMovesForPiece) return false;
-    console.log("Possilbe moves:", possibleMovesForPiece)
     let validMove = await validatePossibleMove(possibleMovesForPiece, tocolum, torow); if(!validMove) return false;
-    console.log("Valiaadmove: ",  validMove)
     return validMove
 }
 
@@ -39,13 +35,12 @@ const pieceIsEnemy = (piece, targetPiece) =>{
 const moveAttack = async (game_id, piece, targetPiece) =>{
     db.tx(t => {
         return t.batch([
-            t.none('update game_pieces set col = NULL, row = NULL where "game_id" = $1 and "piece_id" = $2', [game_id, targetPiece.piece_id]),
+            t.none('update game_pieces set col = 99, row = 99 where "game_id" = $1 and "piece_id" = $2', [game_id, targetPiece.piece_id]),
             t.none('update game_pieces set col = $3, row = $4 where "game_id" = $1 and "piece_id" = $2', [game_id, piece.piece_id, targetPiece.col, targetPiece.row])
         ])
     })
 }
 const move = async (game_id, piece, tocolumn, torow) =>{
-    console.log(game_id, piece.piece_id, tocolumn, torow)
     db.none('update game_pieces set col = $3, row = $4 where "game_id" = $1 and "piece_id" = $2',[game_id, piece.piece_id, tocolumn, torow])
     .then(()=>{
         console.log("Move successful")
@@ -90,9 +85,11 @@ module.exports = {
     movePiece: async function (game_id, fromcolumn, fromrow, tocolumn, torow) {
         let piece = await getPieceData(game_id, fromcolumn, fromrow); if (!piece) return false;
         let isValid = await tryMakeMove(piece,tocolumn,torow)
-        console.log("Valid: ", isValid)
+        let pieceAtTarget = await getPieceData(game_id,tocolumn, torow)
+        console.log("Piece at target: " ,pieceAtTarget)
         if(isValid == 3){
             console.log("Attacking with piece")
+            console.log(game_id, piece, pieceAtTarget)
             let moveSuccess = await moveAttack(game_id, piece, pieceAtTarget) 
         }else if(isValid === 1){
             console.log("Moving piece")
@@ -100,7 +97,6 @@ module.exports = {
         }else{
             return false
         }
-        
         return moveSuccess
     },
     makeAttack: function (piece, tocolum, torow) {
