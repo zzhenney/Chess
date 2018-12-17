@@ -6,12 +6,7 @@ const Game = require("../db/games");
 /* GET home page. */
 router.get('/', function(req, res, next) {
   if(req.isAuthenticated()){
-<<<<<<< HEAD
-		res.render('index', {id: 0 });
-=======
-		res.render('index', { title: 'Chess' });
->>>>>>> origin/loadingGameState
-	
+		res.render('index', {id: 0 });	
 	}
 	else{
 		res.redirect('/login');
