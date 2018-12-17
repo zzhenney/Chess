@@ -14,6 +14,5 @@ const messageForm = document.getElementById('chatinput');
 });
 */
 
-
 chat.initChat(gameId, messageInput, messageDisplay, messageForm);
 
