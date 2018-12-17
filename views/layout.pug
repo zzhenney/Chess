@@ -15,4 +15,13 @@ html
     block content
 
     block scripts
+      script(src="/js/bundle.js")
       script(src="/listGames.js" type="module")
+      
+      script(src= "https://code.jquery.com/jquery-1.11.1.js")
+      script.
+        $('form').submit(function(e) {
+          e.preventDefault();
+        });
+      
+      

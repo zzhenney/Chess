@@ -1,5 +1,3 @@
-extends layout
-
 mixin chatMessage(user, message)
     div
         b #{user}:
@@ -9,8 +7,6 @@ block content
     - const username = "Albert";
     - const username2 = "Larry";
 
-    script
-        include ../frontend/chat.js
 
     div.chatContainer(align= 'center')
         .chatTitleContainer
@@ -19,12 +15,12 @@ block content
 
         .chatWindow
             ul.chatmessages(id="chatMessages")
-                +chatMessage(username, "Hello There!")
-                +chatMessage(username2, "Hi, how's it going?")
 
 
-        form(method='POST' action="chat()" )
-            input.msgfield(type='message', placeholder='Write a message')
+
+        form#chatinput
+            input.msgfield#m(type='message', placeholder='Write a message')
             br
             center
-            input.sendbtn(type='submit', value='POST')
+            input.sendbtn#chatsubmit(type='submit')
+

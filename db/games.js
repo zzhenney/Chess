@@ -4,7 +4,7 @@ exports.createGame = userId => {
 	console.log("creating game " + userId);
 	return db.one("INSERT into games(next_user, white_user) VALUES ($1, $1) RETURNING id", [userId])
 		.then(data => {
-			console.log("game id: " + data.id);
+			//console.log("game id: " + data.id);
 			return db.none("INSERT INTO game_pieces SELECT $1, $2, default_col, default_row, id FROM pieces WHERE default_row IN (0,1)", [data.id, userId])
 				.then(() => {
 					return db.one("INSERT into game_users VALUES($1, $2) RETURNING game_id", [data.id, userId])		
@@ -53,7 +53,7 @@ exports.listGames = () => {
 
 	return db.any("SELECT game_id FROM game_users GROUP BY game_id HAVING COUNT(*) = 1")
 		.then(data => {
-			console.log(data);
+			//console.log(data);
 			return data;
 		})
 		.catch(err => {
@@ -64,7 +64,7 @@ exports.listGames = () => {
 exports.listCurrentGames = userId => {
 	return db.any("SELECT game_id FROM game_users WHERE user_id = $1",[userId])
 		.then(data => {
-			console.log(data);
+			//console.log(data);
 			return data;
 		})
 		.catch(err => {
@@ -75,7 +75,7 @@ exports.listCurrentGames = userId => {
 exports.getGameInfo = gameId => {
 	return db.any("SELECT * FROM game_pieces WHERE game_id = $1", [gameId])
 		.then(data => {
-				console.log(data);
+				//console.log(data);
 				return data;
 		})
 		.catch(err => {
