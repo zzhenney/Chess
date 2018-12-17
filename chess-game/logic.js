@@ -1,5 +1,4 @@
 const moves = require('./moves.js')
-var board = require('./board.js')
 
 const getPath = (fromCol, fromRow, toCol, toRow) =>{
 
@@ -53,10 +52,9 @@ module.exports = {
         return getPathRoute(fromCol, fromRow, toCol, toRow)
     },
     getPosibleMovesPawn: async function (piece) {
-        console.log("Getting moves pawn")
         var posibleMoves = [];
         var direction = (piece.isWhite)? 1 : -1
-        pieceState = 0
+        pieceState = 1
         if (pieceState === 0) {
             posibleMoves.push([piece.col, piece.row + (1*direction)])
             posibleMoves.push([piece.col, piece.row + (2*direction)])
