@@ -73,10 +73,10 @@ exports.listCurrentGames = userId => {
 };
 
 exports.getGameInfo = gameId => {
-	return db.any("SELECT * FROM game_pieces WHERE game_id = $1", [gameId])
+	return db.any("SELECT gp.*, p.name FROM game_pieces gp INNER JOIN pieces p ON gp.piece_id = p.id WHERE game_id = $1", [gameId])
 		.then(data => {
-				//console.log(data);
-				return data;
+			console.log(data);
+			return data;
 		})
 		.catch(err => {
 			console.log("65 DB Err: " + err);
