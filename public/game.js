@@ -28,15 +28,11 @@ let tocol = "";
 let torow = "";
 
 document.addEventListener('click', function(e) {
-
     let position = e.target.getAttribute('id');
-
         if (position != temp) {
             previous = temp;
             temp = position;
         }
-    console.log("Previous Position: " + previous);
-    console.log("Position : " + position);
     fromcol = previous.charAt(0);
     fromrow = previous.charAt(1);
     tocol = position.charAt(0);
@@ -52,17 +48,24 @@ document.addEventListener('click', function(e) {
         tocol: tcol,
         torow: trow};
 
-    fetch("#", {
-        method: 'POST',
-        body: data,
-        headers:{
-            'Content-Type': 'application/json'
-        }
-    })
-        .then(res => res.json())
-        .then(response => console.log('Success:', JSON.stringify(response)))
-        .catch(error => console.error('Error:', error));
 
+        fetch("/game/makemove", {
+            method: "post",
+            headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+              gameid: 3,
+              fromcol: fcol,
+              fromrow: frow,
+              tocol: tcol,
+              torow: trow
+            })
+          })
+          .then( (response) => { 
+              console.log(response)
+          });
     previous = "";
     position = "";
     }, false);

@@ -31,15 +31,20 @@ router.get('/getpieces/:id', function (req, res, next) {
 });
 
 router.post('/makemove', function (req, res, next) {
+  console.log(req)
   let message = "";
   console.log("/makemoves/ called")
-  if (req.param.fromcol && req.param.fromrow && req.param.tocol && req.param.torow && req.body.gameid) {
-    const gameid = req.param.gameid
-    const fromcol = req.param.fromcol
-    const fromrow = req.param.fromrow
-    const tocol = req.param.tocol
-    const torow = req.param.torow
-    let success = board.movePiece(game_id, fromcolumn, fromrow, tocolumn, torow)
+  console.log("Recived from col: ", req.body.fromcol)
+  if ( true ||req.body.fromcol && req.body.fromrow && req.body.tocol && req.body.torow && req.body.gameid) {
+    console.log("---")
+    const gameid = req.body.gameid
+    const fromcol = req.body.fromcol
+    const fromrow = req.body.fromrow
+    const tocol = req.body.tocol
+    const torow = req.body.torow
+    console.log(gameid, fromcol, fromrow, tocol, torow)
+
+    let success = board.movePiece(gameid, fromcol, fromrow, tocol, torow)
       .then(function (success) {;
         res.status(200)
           .json({
