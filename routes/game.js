@@ -8,11 +8,11 @@ const db = require('../db');
 const board = require('../chess-game/board')
 
 router.get('/:id', (request, response) => {
-	if(request.isAuthenticated()){
-		const id = request.params.id;
+  if (request.isAuthenticated()) {
+    const id = request.params.id;
 
-		response.render('game', {id});
-	}
+    response.render('game', { id });
+  }
 
 });
 router.get('/getpieces/:id', function (req, res, next) {
@@ -33,14 +33,18 @@ router.get('/getpieces/:id', function (req, res, next) {
 router.post('/makemove', function (req, res, next) {
   let message = "";
   console.log("/makemoves/ called")
-  if (req.body.fromcol && req.body.fromrow && req.body.gameid) {
-    let legalMoves = board.getAllPossibleForPiece(1, 1, 2)
-      .then(function (legalMoves) {
-        let message = (legalMoves) ? "Retreaved all legal move for selected piece" : "Could not retreve legal moves";
+  if (req.param.fromcol && req.param.fromrow && req.param.tocol && req.param.torow && req.body.gameid) {
+    const gameid = req.param.gameid
+    const fromcol = req.param.fromcol
+    const fromrow = req.param.fromrow
+    const tocol = req.param.tocol
+    const torow = req.param.torow
+    let success = board.movePiece(game_id, fromcolumn, fromrow, tocolumn, torow)
+      .then(function (success) {;
         res.status(200)
           .json({
             status: 'success',
-            legalmoves: legalMoves,
+            successfull: true,
             message: message
           });
       }).catch(function (err) {
