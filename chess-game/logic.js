@@ -1,9 +1,14 @@
-var moves = require('../chess-game/piece_moves.js')
+const moves = require('./moves.js')
 var board = require('./board.js')
 
 const getPath = (fromCol, fromRow, toCol, toRow) =>{
 
 }
+
+const getAllPossibleMoves = (piece, boardData) =>{
+
+}
+
 const pathIsStright = (fromCol, fromRow, toCol, toRow) =>{
     let differenceX = fromCol - toCol
     let differenceY = fromRow - toRow
@@ -33,21 +38,19 @@ const getPathRoute = (fromCol, fromRow, toCol, toRow) =>{
         return false
     }
     [vCol, vRow] = getDirectionVector(fromCol, fromRow, toCol, toRow)
-    console.log(vCol)
     for(i = 1; i <= distance; i++){
-        if(notOutOfBounds(fromCol + vCol * i, fromRow + vRow * i)) passingTiles[i-1] = [fromCol + (vCol * i), fromRow + vRow * i]
+        if(notOutOfBound(fromCol + vCol * i, fromRow + vRow * i)) passingTiles[i-1] = [fromCol + (vCol * i), fromRow + vRow * i]
     }
     return passingTiles
 }
-const notOutOfBounds = (cordCol, cordRow) =>{
+const notOutOfBound = (cordCol, cordRow) =>{
     return (cordCol >= 0 && cordCol < 8 && cordRow >= 0 && cordRow < 8)
 }
 
 
 module.exports = {
-
     getPath: function(fromCol, fromRow, toCol, toRow){
-        console.log(getPathRoute(fromCol, fromRow, toCol, toRow))
+        return getPathRoute(fromCol, fromRow, toCol, toRow)
     },
     getPosibleMovesPawn: async function (piece) {
         console.log("Getting moves pawn")
@@ -68,4 +71,5 @@ module.exports = {
         }
         return posibleMoves
     },
+
 }
