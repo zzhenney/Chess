@@ -1,6 +1,7 @@
 'use strict';
 
 module.exports = {
+
   up: (queryInterface, Sequelize) => {
     /*
       Add altering commands here.
@@ -9,28 +10,22 @@ module.exports = {
       Example:
       return queryInterface.createTable('users', { id: Sequelize.INTEGER });
     */
-    return queryInterface.createTable('pieces',
+      return queryInterface.createTable(
+          'test_table',
           {
               id: {
                 type: Sequelize.INTEGER,
                 primaryKey: true,
                 autoIncrement: true
               },
-              name: {
+              createAt: {
+                type: Sequelize.DATE,
+                  defaultValue: Sequelize.literal('NOW()'),
+                  allowNull: false
+              },
+              testString: {
                 type: Sequelize.STRING,
-                allowNull: false
-              },
-              default_col: {
-                type: Sequelize.INTEGER,
-                allowNull: false
-              },
-              default_row: {
-                type: Sequelize.INTEGER,
-                allowNull: false
-              },
-              img_src: {
-                  type: Sequelize.STRING,
-                  allowNul: false
+                  allowNull: false
               }
           }
       );
@@ -44,6 +39,6 @@ module.exports = {
       Example:
       return queryInterface.dropTable('users');
     */
-    return queryInterface.dropTable('pieces');
+    return queryInterface.dropTable('test_table');
   }
 };

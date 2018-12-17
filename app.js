@@ -8,6 +8,7 @@ var express = require('express');
 var path = require('path');
 var logger = require('morgan');
 
+
 var flash = require('connect-flash');
 const passport = require('./config/passport');
 var session = require('./config/session');
@@ -60,12 +61,6 @@ app.use(session);
 app.use(passport.initialize());
 app.use(passport.session());
 
-//passport
-//app.use(session({secret: 'secret'}));
-app.use(passport.initialize());
-//app.use(passport.session());
-app.use(flash());
-
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
 app.use('/game', gameRouter);
@@ -106,8 +101,5 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-//helper functions (should probably move to diff file)
-
-
-
 module.exports = app;
+

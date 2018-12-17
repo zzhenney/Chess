@@ -7,7 +7,7 @@ const requestData = {
 	headers: {
 		'Content-Type':'application/json',
 	}
-}
+};
 
 
 
@@ -21,9 +21,9 @@ const initRequestData = (method, body) => {
 
 
 const checkResponseCode = response => {
-	if(response.ok){	
+	if(response.ok){
 		return response;
-	}			
+	}
 	Promise.reject(new Error("Response not ok"));
 };
 
@@ -41,6 +41,7 @@ const joinGame = gameId => {
 	return request(`/api/joinGame/${gameId}`);
 };
 
+
 const getGameInfo = gameId => {
 	return request(`/api/getGameInfo/${gameId}`)
 		.then(response => {
@@ -48,6 +49,7 @@ const getGameInfo = gameId => {
 
 		})
 };
+
 
 const listGames = () => {
 	//console.log("listgames");
@@ -58,8 +60,8 @@ const listGames = () => {
 				.then(json => {
 					console.log("response " + json.text());
 				})
-			
-		
+
+
 		})
 		*/
 		.then(response => {
@@ -94,7 +96,6 @@ const leaveGame = gameId => {
 //check response code
 
 
-
 export default {
 	createGame,
 	joinGame,
@@ -102,7 +103,6 @@ export default {
 	listGames,
 	listCurrentGames,
 	leaveGame
-
 
 
 }

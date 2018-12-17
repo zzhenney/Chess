@@ -15,7 +15,7 @@ const appendOpenGames = () => {
 			console.log(response[0].game_id);
 			//document.getElementById('current-games').innerHTML = `button.btn.btn-success.btn-sm.btn-block#${response[0].game_id} Game ${response[0].game_id}`
 			//determines how many open games are shown, scroll bar should be used instead
-			response = response.slice(0, 5);
+
 			response.forEach(function(id){
 				var game = document.createElement('a');
 				game.innerHTML = "Game " + id.game_id
