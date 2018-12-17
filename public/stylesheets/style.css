@@ -43,6 +43,8 @@ a {
   justify-content: center
 }
 
+
+
 .square.img {
   width: 80%;
   height: 80%;
@@ -73,6 +75,17 @@ a {
   background-color: yellow;
 }
 
+.square:hover {
+  border-color: yellow;
+  border-style: solid;
+
+}
+
+
+.highlight-border {
+  border-style: solid;
+  border-color: yellow;
+}
 
 .chatTitleContainer {
   width: 98%;
@@ -168,13 +181,19 @@ tr:nth-child(even) {
 
 }
 
-.gamepiece {
-  width: 70%;
+div.square.black{
+  background-size: 8vw 8vw;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-position: center;
+
 }
 
-
-.flashbox {
-	height: 25px;
+div.square.white{
+  background-size: 8vw 8vw;
+  cursor: pointer;
+  background-repeat: no-repeat;
+  background-position: center;
 }
 
 div.square.black {
@@ -183,8 +202,4 @@ div.square.black {
   background-repeat: no-repeat;
 }
 
-div.square.white {
-  background-size: 100% 100%;
-  cursor: pointer;
-  background-repeat: no-repeat;
-}
+

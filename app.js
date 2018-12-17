@@ -13,6 +13,7 @@ var session = require('./config/session');
 
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
+var gameRouter = require('./routes/game');
 var testsRouter = require('./routes/tests');
 var loginRouter = require('./routes/login');
 
@@ -54,6 +55,7 @@ app.use(passport.session());
 
 app.use('/', indexRouter);
 app.use('/users', usersRouter);
+app.use('/game', gameRouter);
 app.use('/tests', testsRouter);
 app.use('/login', loginRouter);
 
@@ -89,8 +91,5 @@ app.use(function(err, req, res, next) {
   res.render('error');
 });
 
-//helper functions (should probably move to diff file)
-
-
-
 module.exports = app;
+

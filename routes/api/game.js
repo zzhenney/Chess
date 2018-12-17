@@ -66,7 +66,6 @@ router.get('/getGameInfo/:id', function(req, res, next) {
 		Game.getGameInfo(game)
   			.then(data => {
   				res.send(data);
-  				
   			})
   			.catch(err => {
 
