@@ -27,6 +27,10 @@ module.exports = {
               default_row: {
                 type: Sequelize.INTEGER,
                 allowNull: false
+              },
+              img_src: {
+                  type: Sequelize.STRING,
+                  allowNul: false
               }
           }
       );
