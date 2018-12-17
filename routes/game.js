@@ -25,24 +25,74 @@ router.get('/getpieces/:id', function (req, res, next) {
         data: data,
         message: 'Retrieved list of all games'
       });
-  }).catch(function(err){
+  }).catch(function (err) {
     console.log(err)
   })
 });
 
-router.get('/moves/1', function (req, res, next) {
-  let legalMoves = board.getAllPossibleForPiece(1, 1,2)
-  .then(function (legalMoves) {
-    let message = (legalMoves)? "Retreaved all legal move for selected piece" : "Could not retreve legal moves";
-    res.status(200)
-      .json({
-        status: 'success',
-        legalmoves: legalMoves,
-        message: message
-      });
-  }).catch(function(err){
-    console.log(err)
-  })
+router.post('/makemove', function (req, res, next) {
+  let message = "";
+  console.log("/makemoves/ called")
+  if (req.body.fromcol && req.body.fromrow && req.body.gameid) {
+    let legalMoves = board.getAllPossibleForPiece(1, 1, 2)
+      .then(function (legalMoves) {
+        let message = (legalMoves) ? "Retreaved all legal move for selected piece" : "Could not retreve legal moves";
+        res.status(200)
+          .json({
+            status: 'success',
+            legalmoves: legalMoves,
+            message: message
+          });
+      }).catch(function (err) {
+        console.log(err)
+      })
+  }else{
+    for(const key in req.query){
+      console.log(key, req.query[key])
+    }
+    message = "Did not recive the nessesary parameters"
+    console.log(message)
+    res.status(500)
+          .json({
+            status: 'Failure',
+            legalmoves: req.params,
+            message: message
+          });
+  }
+
+});
+
+
+router.post('/moves', function (req, res, next) {
+  let message = "";
+  console.log("/moves/ called")
+  if (req.body.col && req.body.row && req.body.gameid) {
+    let legalMoves = board.getAllPossibleForPiece(1, 1, 2)
+      .then(function (legalMoves) {
+        let message = (legalMoves) ? "Retreaved all legal move for selected piece" : "Could not retreve legal moves";
+        res.status(200)
+          .json({
+            status: 'success',
+            legalmoves: legalMoves,
+            message: message
+          });
+      }).catch(function (err) {
+        console.log(err)
+      })
+  }else{
+    for(const key in req.query){
+      console.log(key, req.query[key])
+    }
+    message = "Did not recive the nessesary parameters"
+    console.log(message)
+    res.status(500)
+          .json({
+            status: 'Failure',
+            legalmoves: req.params,
+            message: message
+          });
+  }
+
 });
 
 
