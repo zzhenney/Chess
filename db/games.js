@@ -73,7 +73,7 @@ exports.listCurrentGames = userId => {
 };
 
 exports.getGameInfo = gameId => {
-	return db.any("SELECT gp.*, p.name FROM game_pieces gp INNER JOIN pieces p ON gp.piece_id = p.id WHERE game_id = $1", [gameId])
+	return db.any("SELECT gp.*, p.name, p.img_src FROM game_pieces gp INNER JOIN pieces p ON gp.piece_id = p.id WHERE game_id = $1", [gameId])
 		.then(data => {
 			console.log(data);
 			return data;

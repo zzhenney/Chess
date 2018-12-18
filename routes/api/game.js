@@ -65,6 +65,7 @@ router.get('/getGameInfo/:id', function(req, res, next) {
 	if(req.isAuthenticated()){
 		Game.getGameInfo(game)
   			.then(data => {
+          console.log(data);
   				res.send(data);
   			})
   			.catch(err => {

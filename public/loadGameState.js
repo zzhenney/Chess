@@ -74,55 +74,18 @@ idArray["57"] = "F8";
 idArray["67"] = "G8";
 idArray["77"] = "H8";
 
-const imgsrc = {};
-imgsrc[1] = "/images/rWhite.png";
-imgsrc[2] = "/images/kWhite.png";
-imgsrc[3] = "/images/bWhite.png";
-imgsrc[4] = "/images/qWhite.png";
-imgsrc[5] = "/images/kingWhite.png";
-imgsrc[6] = "/images/bWhite.png";
-imgsrc[7] = "/images/kWhite.png";
-imgsrc[8] = "/images/rWhite.png";
-imgsrc[9] = "/images/pWhite.png";
-imgsrc[10] = "/images/pWhite.png";
-imgsrc[11] = "/images/pWhite.png";
-imgsrc[12] = "/images/pWhite.png";
-imgsrc[13] = "/images/pWhite.png";
-imgsrc[14] = "/images/pWhite.png";
-imgsrc[15] = "/images/pWhite.png";
-imgsrc[16] = "/images/pWhite.png";
-imgsrc[17] = "/images/rBlack.png";
-imgsrc[18] = "/images/kBlack.png";
-imgsrc[19] = "/images/bBlack.png";
-imgsrc[20] = "/images/qBlack.png";
-imgsrc[21] = "/images/kingBlack.png";
-imgsrc[22] = "/images/bBlack.png";
-imgsrc[23] = "/images/kBlack.png";
-imgsrc[24] = "/images/rBlack.png";
-imgsrc[25] = "/images/pBlack.png";
-imgsrc[26] = "/images/pBlack.png";
-imgsrc[27] = "/images/pBlack.png";
-imgsrc[28] = "/images/pBlack.png";
-imgsrc[29] = "/images/pBlack.png";
-imgsrc[30] = "/images/pBlack.png";
-imgsrc[31] = "/images/pBlack.png";
-
-
-
 const start = ()  => {
     const gameId = document.getElementById('game-id').value;
 
     api.getGameInfo(gameId)
         .then(data => {
         for (let i = 0; i < Object.keys(data).length; i++) {
-            console.log("img_src: " + data[i].piece_id);
-            console.log("col: " + data[i].col + " row: " + data[i].row);
             const key = data[i].col + "" + data[i].row;
             const id = idArray[key];
             const element = document.querySelector("#" + id);
 
             if(element != null)
-                element.setAttribute("style", "background-image: url("+ imgsrc[data[i].piece_id] + ")");
+                element.setAttribute("style", "background-image: url("+ data[i].img_src + ")");
         }
     }).catch(err => {
         // handle error
