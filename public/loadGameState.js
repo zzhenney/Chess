@@ -1,4 +1,7 @@
-import api from '/scripts/api/index.js';
+const {socket} =  require('../frontend/socket.js');
+const api = require('../frontend/api/index.js');
+//const game = require("../frontend/gameSocket.js");
+
 
 const idArray = {};
 
@@ -74,24 +77,55 @@ idArray["57"] = "F8";
 idArray["67"] = "G8";
 idArray["77"] = "H8";
 
-const start = ()  => {
-    const gameId = document.getElementById('game-id').value;
+const gameId = document.getElementById('game-id').value;
 
-    api.getGameInfo(gameId)
-        .then(data => {
-        for (let i = 0; i < Object.keys(data).length; i++) {
-            const key = data[i].col + "" + data[i].row;
-            const id = idArray[key];
-            const element = document.querySelector("#" + id);
+/*
+game.initGameSocket(gameId);
+*/
+//const gameId = document.getElementById('game-id').value;
 
-            if(element != null)
-                element.setAttribute("style", "background-image: url("+ data[i].img_src + ")");
-        }
-    }).catch(err => {
-        // handle error
-        console.log('Error loading gamestate: ' + err);
+const clearBoard = () => {
+    for(const key in idArray){
+        const id = idArray[key];
+        const element = document.querySelector("#" + id);
+        if(element != null)
+            element.setAttribute("style", "background-image: url('')");
+    }
+}
+
+
+const render = ()  => {
+        
+        api.getGameInfo(gameId)
+            .then(data => {
+            for (let i = 0; i < Object.keys(data).length; i++) {
+                const key = data[i].col + "" + data[i].row;
+                const id = idArray[key];
+
+                const element = document.querySelector("#" + id);
+
+                if(element != null)
+                    element.setAttribute("style", "background-image: url("+ data[i].img_src + ")");
+            }
+        }).catch(err => {
+            // handle error
+            console.log('Error loading gamestate: ' + err);
+        });
+}
+
+const start = () => {
+    console.log("START RENDER");
+    socket.on(`move_${gameId}`, function(){
+        clearBoard();
+        render();
+
     });
+    render();
+
+
 
 };
 
-document.addEventListener('DOMContentLoaded', start);
+
+document.addEventListener('DOMContentLoaded', render);
+start();

@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const board = require('../chess-game/board')
+const {io} = require('../messaging');
 
 router.get('/:id', (request, response) => {
   if (request.isAuthenticated()) {
@@ -37,9 +38,10 @@ router.post('/makemove', async function (req, res, next) {
     const tocol = req.body.tocol
     const torow = req.body.torow
 
-    console.log("Game id" , gameid)
     let success = await board.movePiece(gameid, fromcol, fromrow, tocol, torow, userid)
-      .then(function (success) {;
+      .then(function (success) {
+        console.log(`move_${gameid}`)
+        io.emit(`move_${gameid}`);
         res.status(200)
           .json({
             status: 'success',
@@ -99,20 +101,5 @@ router.get('/:gameid', function (req, res, next) {
   res.json(boardState)
 });
 
-
-/*
-router.get('/api/joinGame/:id', (request, response) => {
-	if(request.isAuthenticated()){
-		const id = request.params.id;
-		response.redirect(`/api/joinGame/${id}`);
-	}
-});
-router.get('/api/createGame', (request, response) => {
-	if(request.isAuthenticated()){
-		//const id = request.params.id;
-		response.redirect('/api/createGame');
-	}
-});
-*/
 
 module.exports = router;
