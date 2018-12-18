@@ -54,7 +54,7 @@ module.exports = {
     getPosibleMovesPawn: async function (piece) {
         var posibleMoves = [];
         var direction = (piece.isWhite)? 1 : -1
-        pieceState = 1
+        pieceState = 0
         if (pieceState === 0) {
             posibleMoves.push([piece.col, piece.row + (1*direction)])
             posibleMoves.push([piece.col, piece.row + (2*direction)])

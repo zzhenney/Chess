@@ -29,6 +29,14 @@ const legalMovesPawn = (piece, boardData, gameInfo) => {
         let tileStateSecound = tileOcupiedState(boardData, piece.colum, piece.row + (2 * v))
         if (tileStateSecound == 1) legalMoves.push([piece.col, piece.row + (2 * v), tileStateSecound])
     }
+    let tileStateAttackRight = tileOcupiedState(boardData, piece.col+1, piece.row + (1 * v))
+    if(tileStateAttackRight === 3){
+        legalMoves.push([piece.col+1, piece.row + (1 * v), tileStateAttackRight])
+    }
+    let tileStateAttackLeft = tileOcupiedState(boardData, piece.col-1, piece.row + (1 * v))
+    if(tileStateAttackLeft === 3){
+        legalMoves.push([piece.col-1, piece.row + (1 * v), tileStateAttackLeft])
+    }
     //Ignoring passant situation for to simplyfy it although most of the code for that situation is already written
     return legalMoves
 }
@@ -69,7 +77,7 @@ const legalMovesKnight = (piece, boardData) => {
     let directions = [[2, 1], [2, -1], [-2, 1], [-2, -1], [1, 2], [1, -2], [-1, 2], [-1, -2]]
     return getMovesDirectionalSingle(piece, boardData, directions)
 }
-
+ 
 const legalMovesKing = (piece, boardData) => {
     let directions = [[0, 1], [0, -1], [1, 0], [-1, 0]]
     return getMovesDirectionalSingle(piece, boardData, directions)

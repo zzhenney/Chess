@@ -45,11 +45,11 @@ const getPieceData = async (gameId, column, row) => {
 const pieceIsEnemy = (piece, targetPiece) => {
     return (piece.isWhite != targetPiece.isWhite)
 }
-const moveAttack = async (game_id, piece, targetPiece) => {
+const moveAttack = async (game_id, piece, targetPiece, state) => {
     db.tx(t => {
         return t.batch([
-            t.none('update game_pieces set col = 99, row = 99 where "game_id" = $1 and "piece_id" = $2', [game_id, targetPiece.piece_id]),
-            t.none('update game_pieces set col = $3, row = $4 where "game_id" = $1 and "piece_id" = $2', [game_id, piece.piece_id, targetPiece.col, targetPiece.row])
+            t.none('update game_pieces set col = 99, row = 99, state = $3 where "game_id" = $1 and "piece_id" = $2', [game_id, targetPiece.piece_id, state]),
+            t.none('update game_pieces set col = $3, row = $4, state = $5 where "game_id" = $1 and "piece_id" = $2', [game_id, piece.piece_id, targetPiece.col, targetPiece.row, state])
         ])
     })
 }
@@ -63,11 +63,11 @@ const changeTurn = async (game_id, user_id) =>{
     })
 }
 
-const move = async (game_id, piece, tocolumn, torow) => {
+const move = async (game_id, piece, tocolumn, torow, state) => {
     console.log(piece)
     console.log(game_id, piece.piece_id, tocolumn, torow)
     if(game_id != null && piece.piece_id != null && tocolumn !=null && torow != null){
-    return db.none('update game_pieces set col = $3, row = $4 where "game_id" = $1 and "piece_id" = $2', [game_id, piece.piece_id, tocolumn, torow])
+    return db.none('update game_pieces set col = $3, row = $4, state = $5 where "game_id" = $1 and "piece_id" = $2', [game_id, piece.piece_id, tocolumn, torow, state])
         .then(async (data) => {
             console.log("Move successful", data)
             console.log(piece)
@@ -130,6 +130,32 @@ const isPlayersTurn = (playerId, gameInfo) =>{
     return playerId == gameInfo['next_user']
 }
 
+const checkIfInCheck = (fromcol, fromrow, tocol, torow, boardData, gameInfo) =>{
+    let board = boardData.slice()
+    let pieceToMove = (possibleMoves.find(function (pice) {
+        return (pice[0] == fromcol && pice[1] == fromrow)
+    }))
+    console.log(pieceToMove)
+    pieceToMove.col = tocol
+    pieceToMove.row = torow
+    //gameInfo['userid']
+    let possibleEnemyAttackMoves = []
+    pieceToMove.forEach(piece =>{
+        if(piece.userid != gameInfo['userid']){
+            getAllLegalMoves(piece, board,gameInfo).forEach(m=>{
+                if(m[2] === 3){
+                    possibleEnemyAttackMoves.push(m)
+                }
+            })
+        }
+    })
+    let friendlyKingCord
+    friendlyKingCord[0] =  
+    possibleEnemyAttackMoves.forEach(move=>{
+        
+    })
+}
+
 
 module.exports = {
     tilesIsBlocked: async function (game_id, tileCords) {
@@ -172,25 +198,20 @@ module.exports = {
         let pieceAtTarget = moves.searchTile(boarddata, tocolumn, torow)
         console.log("Piece at target: ", pieceAtTarget)
         console.log("Valid", isValid)
+        let state = 1
+
+        let inCheck = checkIfInCheck(fromcol, fromrow, tocolumn, torow, boarddata, gameInfo)
         if (isValid == 3) {
             console.log("Attacking with piece")
             console.log(game_id, piece, pieceAtTarget)
-            let moveSuccess = await moveAttack(game_id, piece, pieceAtTarget)
+            let moveSuccess = await moveAttack(game_id, piece, pieceAtTarget, state)
         } else if (isValid === 1) {
             console.log("Moving piece")
-            let moveSuccess = await move(game_id, piece, tocolumn, torow)
+            let moveSuccess = await move(game_id, piece, tocolumn, torow, state)
         } else {
             return false
         }
         return moveSuccess
-    },
-    makeAttack: function (piece, tocolum, torow) {
-        db.one('update game_pieces set col = $3, row = $4 where "game_id" = $1 and "piece_id" = $2', piece.gameId, piece.piece_id, tocolum, torow).then(function (data) {
-            var piece = { name: data["name"], col: data["col"], row: data["row"], isWhite: (data["whiteUserId"] == data["id"]), state: 0 }
-            return piece
-        }).catch(err => {
-            console.log(err)
-        });
     },
     getAllPossibleForPiece: async function (gameId, column, row) {
         console.log(getAllPieces(3))
