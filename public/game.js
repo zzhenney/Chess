@@ -38,6 +38,8 @@ document.addEventListener('click', function(e) {
     tocol = position.charAt(0);
     torow = position.charAt(1);
 
+    const gameId = document.getElementById('game-id').value;
+
     let fcol = alphaToX[fromcol];
     let frow = stringToInteger[fromrow];
     let tcol = alphaToX[tocol];
@@ -56,7 +58,7 @@ document.addEventListener('click', function(e) {
               'Content-Type': 'application/json'
             },
             body: JSON.stringify({
-              gameid: 3,
+              gameid: gameId,
               fromcol: fcol,
               fromrow: frow,
               tocol: tcol,

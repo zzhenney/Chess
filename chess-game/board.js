@@ -8,6 +8,7 @@ const validatePossibleMove = async (possibleMoves, tocolum, torow) => {
         return (possiblemove[0] == tocolum && possiblemove[1] == torow)
     }))
     if (found) {
+        console.log("Found move: ", found[2])
         return found[2]
     }
 }
@@ -46,12 +47,19 @@ const pieceIsEnemy = (piece, targetPiece) => {
     return (piece.isWhite != targetPiece.isWhite)
 }
 const moveAttack = async (game_id, piece, targetPiece, state) => {
+    console.log("Target" , targetPiece)
     db.tx(t => {
         return t.batch([
             t.none('update game_pieces set col = 99, row = 99, state = $3 where "game_id" = $1 and "piece_id" = $2', [game_id, targetPiece.piece_id, state]),
             t.none('update game_pieces set col = $3, row = $4, state = $5 where "game_id" = $1 and "piece_id" = $2', [game_id, piece.piece_id, targetPiece.col, targetPiece.row, state])
-        ])
+        ]).then(async data =>{
+            let turnChanged = await changeTurn(game_id, piece.userid)
+            return true
+        }).catch(err=>{
+            console.log(err)
+        })
     })
+    return false
 }
 
 const changeTurn = async (game_id, user_id) =>{
@@ -65,7 +73,7 @@ const changeTurn = async (game_id, user_id) =>{
 
 const move = async (game_id, piece, tocolumn, torow, state) => {
     console.log(piece)
-    console.log(game_id, piece.piece_id, tocolumn, torow)
+    console.log(game_id, piece.piece_id, tocolumn, torow, state)
     if(game_id != null && piece.piece_id != null && tocolumn !=null && torow != null){
     return db.none('update game_pieces set col = $3, row = $4, state = $5 where "game_id" = $1 and "piece_id" = $2', [game_id, piece.piece_id, tocolumn, torow, state])
         .then(async (data) => {
@@ -187,6 +195,7 @@ module.exports = {
         if(piece.userid != userid) {
             console.log(piece.userid, userid)
             console.log("Move denied as this piece is not owned by the current user")
+            return false
         }else{
             console.log("Move allowed for user", userid)
         }
@@ -195,12 +204,12 @@ module.exports = {
         console.log("Got pice: ", piece)
         let isValid = await tryMakeMove(pieces, piece, tocolumn, torow, gameInfo)
 
-        let pieceAtTarget = moves.searchTile(boarddata, tocolumn, torow)
+        let pieceAtTarget = moves.searchTile(pieces, tocolumn, torow)
         console.log("Piece at target: ", pieceAtTarget)
         console.log("Valid", isValid)
         let state = 1
 
-        let inCheck = checkIfInCheck(fromcol, fromrow, tocolumn, torow, boarddata, gameInfo)
+        //let inCheck = checkIfInCheck(fromcol, fromrow, tocolumn, torow, boarddata, gameInfo)
         if (isValid == 3) {
             console.log("Attacking with piece")
             console.log(game_id, piece, pieceAtTarget)
