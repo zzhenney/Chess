@@ -1,0 +1,1 @@
+console.error("\n/Users/zachenney/Documents/School/Fall2018/CSC667/Term Project/repo/term-project-team-b/public/loadGameState.js:1\nimport api from '/scripts/api/index.js';\n^\nParseError: 'import' and 'export' may appear only with 'sourceType: module'");
