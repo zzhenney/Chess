@@ -44,10 +44,12 @@ const joinGame = gameId => {
 
 const getGameInfo = gameId => {
 	return request(`/api/getGameInfo/${gameId}`)
-		.then (response => {
-			return response.json();
+		.then(response => {
+			return response.json()
+
 		})
-}
+};
+
 
 const listGames = () => {
 	//console.log("listgames");
@@ -64,10 +66,7 @@ const listGames = () => {
 		*/
 		.then(response => {
 			return response.json()
-				.then(text => {
-					console.log("response: " + text)
-					return text;
-				})
+				
 		})
 		//.then(text => console.log("response: " + text))
 		.catch(err => {

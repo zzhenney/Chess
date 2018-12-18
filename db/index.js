@@ -10,3 +10,4 @@ console.log(connection);
 //const Game = require("./games")(connection);
 
 module.exports = connection
+

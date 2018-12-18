@@ -1,8 +1,13 @@
+//move this file to frontend then import and call functions from public js file
+
 //list games
 import api from '/scripts/api/index.js';
+//import chat from '/scripts/api/chat.js';
 //const io = require('../../messaging');
 
 //io.on('new game', function(game))
+//TO DO: grab game_id
+
 
 const appendOpenGames = () => {
 	api.listGames()
@@ -18,7 +23,7 @@ const appendOpenGames = () => {
 				game.setAttribute('class', "btn btn-success btn-sm btn-block" )
 				game.href = `/api/joinGame/${id.game_id}`
 				document.getElementById('current-games').appendChild(game)
-				console.log(id.game_id);
+				//console.log(id.game_id);
 			})
 
 			/*
@@ -27,6 +32,7 @@ const appendOpenGames = () => {
 			*/
 		})
 }
+
 
 const appendCurrentGames = () => {
 	api.listCurrentGames()
@@ -39,7 +45,7 @@ const appendCurrentGames = () => {
 				game.setAttribute('class', "btn btn-warning btn-sm btn-block" )
 				game.href = `/game/${id.game_id}`
 				document.getElementById('view-games').appendChild(game)
-				console.log(id.game_id);
+				//console.log(id.game_id);
 			})
 		})
 }
@@ -55,11 +61,23 @@ const appendQuitGame = () => {
 	document.getElementById('quitGame').appendChild(element)
 }
 
+const gameInfo = () => {
+	const gameId = document.getElementById('game-id').value
+	console.log('GAME ID: ' + gameId)
+	api.getGameInfo(gameId)
+		.then(response => {
+			console.log("GAME " + response);
+		})
+
+
+}
+
 
 const generateGameList = () => {
 	appendOpenGames();
 	appendCurrentGames();
 	appendQuitGame();
+	//gameInfo();
 }
 
 

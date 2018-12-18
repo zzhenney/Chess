@@ -1,4 +1,45 @@
 
+const socket = require('./socket.js');
+const chat  = require('./api/chat/index.js');
+
+//var session = require('../config/session');
+
+
+const initChat = (gameId, messageInput, messageDisplay, messageForm) => {
+    console.log("INTI THE CHATTER");
+    socket.on(`chat_${gameId}`, function(message){
+            message = Object.values(message.username) + ": " + Object.values(message.message);
+            console.log('SOCKET MESSAGE: ' + message);
+            console.log(messageDisplay);
+            element = document.createElement('li');
+            element.appendChild(document.createTextNode(message));
+            messageDisplay.appendChild(element);
+            
+            //socket.emit(`chat_${gameId}`,  message);
+        })
+
+    messageInput.addEventListener('keydown', function(event){
+        if (event.key === "Enter") {
+            console.log("EVENT TARGET: " + event.target.value);
+            const message = event.target.value;
+            chat.sendMessage(gameId, message);
+            console.log(messageInput);
+            messageForm.reset();
+        }
+    })
+
+    socket.on('error', function (err) {
+        console.log(err);
+    })
+
+};
+
+module.exports = { initChat };
+
+
+
+
+/*
 function chat() {
    //make connection
     const socket = io.connect('http://localhost:3800');
@@ -28,3 +69,7 @@ function chat() {
     });
 
 }
+*/
+
+//export default { initChat }
+

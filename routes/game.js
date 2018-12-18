@@ -1,11 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var chessgame = require('../chess-game/logic.js')
-var models = require('../models');
-var games = models.games
-var users = models.users
-const db = require('../db');
-const board = require('../chess-game/board')
 
 router.get('/:id', (request, response) => {
   if (request.isAuthenticated()) {
@@ -15,6 +9,7 @@ router.get('/:id', (request, response) => {
   }
 
 });
+
 router.get('/getpieces/:id', function (req, res, next) {
   db.any('select * from  game_pieces left join pieces on game_pieces."piece_id" = pieces."id" where game_pieces."gameId" = $1', req.params.id
   ).then(function (data) {
@@ -103,24 +98,18 @@ router.get('/:gameid', function (req, res, next) {
 });
 
 
-
-
 /*
 router.get('/api/joinGame/:id', (request, response) => {
 	if(request.isAuthenticated()){
 		const id = request.params.id;
-
 		response.redirect(`/api/joinGame/${id}`);
 	}
 });
-
 router.get('/api/createGame', (request, response) => {
 	if(request.isAuthenticated()){
 		//const id = request.params.id;
-
 		response.redirect('/api/createGame');
 	}
-
 });
 */
 

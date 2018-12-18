@@ -164,7 +164,10 @@ tr:nth-child(even) {
   text-align: left;
   text-align: -moz-left;
   text-align: -webkit-left;
+  list-style-type: none;
+  padding-left: 10px;
 }
+
 
 .has-text-centered {
   text-aligned: center !important;

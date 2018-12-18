@@ -1,3 +1,4 @@
+
 if(process.env.NODE_ENV === 'development'){
   require('dotenv').config();
 }
@@ -6,9 +7,12 @@ var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var logger = require('morgan');
+
+
 var flash = require('connect-flash');
 const passport = require('./config/passport');
 var session = require('./config/session');
+
 //require('./config/passport')(passport);
 
 var indexRouter = require('./routes/index');
@@ -16,6 +20,7 @@ var usersRouter = require('./routes/users');
 var gameRouter = require('./routes/game');
 var testsRouter = require('./routes/tests');
 var loginRouter = require('./routes/login');
+
 
 var chessboardRouter = require('./routes/chessboard');
 var registrationRouter = require('./routes/registration');
@@ -29,6 +34,9 @@ var logoutRouter = require('./routes/logout');
 var registerRouter = require('./routes/register');
 
 var gamesAPIRouter = require('./routes/api/game');
+var chatAPIRouter = require('./routes/api/chat');
+var userAPIRouter = require('./routes/api/users');
+
 
 
 console.log(indexRouter);
@@ -71,6 +79,8 @@ app.use('/logout', logoutRouter);
 app.use('/register', registerRouter);
 
 app.use('/api', gamesAPIRouter);
+app.use('/api/chat', chatAPIRouter);
+app.use('/api/users', userAPIRouter);
 
 //require('./app/routes.js')(app, passport);
 

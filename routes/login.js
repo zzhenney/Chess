@@ -19,8 +19,6 @@ router.post('/', (req, res) => {
 			console.log('route error');
 			res.redirect('/tests');
 		})
-
-
 });
 */
 
@@ -35,4 +33,3 @@ router.post(
 );
 
 module.exports = router;
-
