@@ -25,20 +25,24 @@ router.get('/getpieces/:id', function (req, res, next) {
 });
 
 router.post('/makemove', function (req, res, next) {
+  console.log("Making move")
   let message = "";
-  if ( true ||req.body.fromcol && req.body.fromrow && req.body.tocol && req.body.torow && req.body.gameid) {
+  const userid = req.session.passport.user
+  console.log(req.body.fromcol , req.body.fromrow , req.body.tocol , req.body.torow , req.body.gameid)
+  if (true  ||req.body.fromcol && req.body.fromrow && req.body.tocol && req.body.torow && req.body.gameid) {
     const gameid = req.body.gameid
     const fromcol = req.body.fromcol
     const fromrow = req.body.fromrow
     const tocol = req.body.tocol
     const torow = req.body.torow
 
-    let success = board.movePiece(gameid, fromcol, fromrow, tocol, torow)
+    console.log("Game id" , gameid)
+    let success = board.movePiece(gameid, fromcol, fromrow, tocol, torow, userid)
       .then(function (success) {;
         res.status(200)
           .json({
             status: 'success',
-            successfull: true,
+            successfull: success,
             message: message
           });
       }).catch(function (err) {
@@ -59,6 +63,7 @@ router.post('/makemove', function (req, res, next) {
 
 router.post('/moves', function (req, res, next) {
   let message = "";
+   
   if (req.body.col && req.body.row && req.body.gameid) {
     let legalMoves = board.getAllPossibleForPiece(1, 1, 2)
       .then(function (legalMoves) {

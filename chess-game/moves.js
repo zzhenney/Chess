@@ -1,8 +1,9 @@
 
 
-const getAllLegalMoves = (piece, boardData) => {
+const getAllLegalMoves = (piece, boardData, gameInfo) => {
+    console.log(gameInfo)
     console.log("Finding moves for: ", piece.name)
-    if (piece.name == 'pawn') return legalMovesPawn(piece, boardData)
+    if (piece.name == 'pawn') return legalMovesPawn(piece, boardData, gameInfo)
     if (piece.name == 'bishop') return legalMovesBishop(piece, boardData)
     if (piece.name == 'knight') return legalMovesKnight(piece, boardData)
     if (piece.name == 'queen') return legalMovesQueen(piece, boardData)
@@ -10,8 +11,17 @@ const getAllLegalMoves = (piece, boardData) => {
     if (piece.name == 'king') return legalMovesKing(piece, boardData)
 }
 
-const legalMovesPawn = (piece, boardData) => {
-    let v = 1//(piece.iswhite)? 1 : -1
+const getPawnDirection = (piece, gameInfo) =>{
+    if(piece.userid == gameInfo['white_user']){
+        return 1
+    }else{
+        return -1
+    }
+}
+
+const legalMovesPawn = (piece, boardData, gameInfo) => {
+    console.log("finding legal moves pawn")
+    let v = getPawnDirection(piece, gameInfo)
     let legalMoves = []
     let tileStateFirst = tileOcupiedState(boardData, piece.col, piece.row + (1 * v))
     if (tileStateFirst == 1 || tileStateFirst == 1) legalMoves.push([piece.col, piece.row + (1 * v), tileStateFirst])
@@ -24,6 +34,7 @@ const legalMovesPawn = (piece, boardData) => {
 }
 
 const legalMovesQueen = (piece, boardData) => {
+    console.log("Finding legal moves queen")
     let legalMoves = []
     legalMoves = legalMoves.concat(getMovesDirectional(piece, boardData, -1, -1))
     legalMoves = legalMoves.concat(getMovesDirectional(piece, boardData, -1, 0))
@@ -115,8 +126,11 @@ const tileOcupiedState = (boardData, colum, row, playerId) => {
 
 }
 
-const searchT = (boardData, colum, row) => {
-    return boardData.find(function (piece) {
+const searchT = (pieces, colum, row) => {
+//    console.log("0: ",boardData[0])
+ //   console.log("1: ",boardData[1])
+//    let pieces = boardData
+    return pieces.find(function (piece) {
         return (piece.col == colum && piece.row == row)
     })
 }
@@ -126,8 +140,8 @@ const notOutOfBounds = (cordCol, cordRow) => {
 }
 
 module.exports = {
-    getAllLegalMoves: function (piece, boardData) {
-        return getAllLegalMoves(piece, boardData)
+    getAllLegalMoves: function (piece, boardData, gameInfo) {
+        return getAllLegalMoves(piece, boardData, gameInfo)
     },
     searchTile: function (boardData, colum, row) {
         return searchT(boardData, colum, row)
