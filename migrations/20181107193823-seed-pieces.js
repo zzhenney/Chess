@@ -10,8 +10,8 @@ module.exports = {
       return queryInterface.createTable('users', { id: Sequelize.INTEGER });
     */
     return queryInterface.bulkInsert('pieces', [
-      { name: 'rook',   default_col: 0, default_row: 0, img_src:'images/rWhite.png'}, //id 1
-      { name: 'knight', default_col: 1, default_row: 0, img_src:'images/kWhite.png'},
+      { name: 'rook',   default_col: 0, default_row: 0, img_src:'/images/rWhite.png'}, //id 1
+      { name: 'knight', default_col: 1, default_row: 0, img_src:'/images/kWhite.png'},
       { name: 'bishop', default_col: 2, default_row: 0, img_src:'/images/bWhite.png'},
       { name: 'queen',  default_col: 3, default_row: 0, img_src:'/images/qWhite.png'},
       { name: 'king',   default_col: 4, default_row: 0, img_src:'/images/kingWhite.png'},
