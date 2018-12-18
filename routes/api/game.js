@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const Game = require("../../db/games");
 
-const io = require('../../messaging');
+const {io} = require('../../messaging');
 
 
 router.get('/createGame', function(req, res, next) {
@@ -65,7 +65,7 @@ router.get('/getGameInfo/:id', function(req, res, next) {
 	if(req.isAuthenticated()){
 		Game.getGameInfo(game)
   			.then(data => {
-          console.log(data);
+          //console.log(data);
   				res.send(data);
   			})
   			.catch(err => {
