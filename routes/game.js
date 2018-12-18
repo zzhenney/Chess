@@ -1,5 +1,6 @@
 var express = require('express');
 var router = express.Router();
+const board = require('../chess-game/board')
 
 router.get('/:id', (request, response) => {
   if (request.isAuthenticated()) {
@@ -24,12 +25,12 @@ router.get('/getpieces/:id', function (req, res, next) {
   })
 });
 
-router.post('/makemove', function (req, res, next) {
+router.post('/makemove', async function (req, res, next) {
   console.log("Making move")
   let message = "";
   const userid = req.session.passport.user
   console.log(req.body.fromcol , req.body.fromrow , req.body.tocol , req.body.torow , req.body.gameid)
-  if (true  ||req.body.fromcol && req.body.fromrow && req.body.tocol && req.body.torow && req.body.gameid) {
+  if (req.body.fromcol != null && req.body.fromrow != null && req.body.tocol != null && req.body.torow != null && req.body.gameid != null) {
     const gameid = req.body.gameid
     const fromcol = req.body.fromcol
     const fromrow = req.body.fromrow
@@ -37,7 +38,7 @@ router.post('/makemove', function (req, res, next) {
     const torow = req.body.torow
 
     console.log("Game id" , gameid)
-    let success = board.movePiece(gameid, fromcol, fromrow, tocol, torow, userid)
+    let success = await board.movePiece(gameid, fromcol, fromrow, tocol, torow, userid)
       .then(function (success) {;
         res.status(200)
           .json({
@@ -49,6 +50,7 @@ router.post('/makemove', function (req, res, next) {
         console.log(err)
       })
   }else{
+    console.log("Failed, didnt revice parameters")
     message = "Did not recive the nessesary parameters"
     res.status(500)
           .json({

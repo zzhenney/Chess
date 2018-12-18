@@ -2,13 +2,14 @@
 
 const getAllLegalMoves = (piece, boardData, gameInfo) => {
     console.log(gameInfo)
+    let playerId = gameInfo.userid
     console.log("Finding moves for: ", piece.name)
     if (piece.name == 'pawn') return legalMovesPawn(piece, boardData, gameInfo)
-    if (piece.name == 'bishop') return legalMovesBishop(piece, boardData)
-    if (piece.name == 'knight') return legalMovesKnight(piece, boardData)
-    if (piece.name == 'queen') return legalMovesQueen(piece, boardData)
-    if (piece.name == 'rook') return legalMovesRook(piece, boardData)
-    if (piece.name == 'king') return legalMovesKing(piece, boardData)
+    if (piece.name == 'bishop') return legalMovesBishop(piece, boardData, playerId)
+    if (piece.name == 'knight') return legalMovesKnight(piece, boardData, playerId)
+    if (piece.name == 'queen') return legalMovesQueen(piece, boardData, playerId)
+    if (piece.name == 'rook') return legalMovesRook(piece, boardData, playerId)
+    if (piece.name == 'king') return legalMovesKing(piece, boardData, playerId)
 }
 
 const getPawnDirection = (piece, gameInfo) =>{
@@ -21,61 +22,72 @@ const getPawnDirection = (piece, gameInfo) =>{
 
 const legalMovesPawn = (piece, boardData, gameInfo) => {
     console.log("finding legal moves pawn")
+    console.log("Info: ",gameInfo)
+    let playerId = gameInfo.userid
     let v = getPawnDirection(piece, gameInfo)
     let legalMoves = []
-    let tileStateFirst = tileOcupiedState(boardData, piece.col, piece.row + (1 * v))
+    let tileStateFirst = tileOcupiedState(boardData, piece.col, piece.row + (1 * v), playerId)
     if (tileStateFirst == 1 || tileStateFirst == 1) legalMoves.push([piece.col, piece.row + (1 * v), tileStateFirst])
     if (piece.state === 0 && tileStateFirst === 1) {
-        let tileStateSecound = tileOcupiedState(boardData, piece.colum, piece.row + (2 * v))
+        let tileStateSecound = tileOcupiedState(boardData, piece.colum, piece.row + (2 * v), playerId)
         if (tileStateSecound == 1) legalMoves.push([piece.col, piece.row + (2 * v), tileStateSecound])
     }
+    let tileStateAttackRight = tileOcupiedState(boardData, piece.col+1, piece.row + (1 * v), playerId)
+    if(tileStateAttackRight === 3){
+        legalMoves.push([piece.col+1, piece.row + (1 * v), tileStateAttackRight])
+    }
+    let tileStateAttackLeft = tileOcupiedState(boardData, piece.col-1, piece.row + (1 * v), playerId)
+    if(tileStateAttackLeft === 3){
+        legalMoves.push([piece.col-1, piece.row + (1 * v), tileStateAttackLeft])
+    }
+    console.log(legalMoves)
     //Ignoring passant situation for to simplyfy it although most of the code for that situation is already written
     return legalMoves
 }
 
-const legalMovesQueen = (piece, boardData) => {
+const legalMovesQueen = (piece, boardData, playerId) => {
     console.log("Finding legal moves queen")
     let legalMoves = []
-    legalMoves = legalMoves.concat(getMovesDirectional(piece, boardData, -1, -1))
-    legalMoves = legalMoves.concat(getMovesDirectional(piece, boardData, -1, 0))
-    legalMoves = legalMoves.concat(getMovesDirectional(piece, boardData, -1, 1))
-    legalMoves = legalMoves.concat(getMovesDirectional(piece, boardData, 0, -1))
-    legalMoves = legalMoves.concat(getMovesDirectional(piece, boardData, 0, 1))
-    legalMoves = legalMoves.concat(getMovesDirectional(piece, boardData, 1, -1))
-    legalMoves = legalMoves.concat(getMovesDirectional(piece, boardData, 1, 0))
-    legalMoves = legalMoves.concat(getMovesDirectional(piece, boardData, 1, 1))
+    legalMoves = legalMoves.concat(getMovesDirectional(piece, boardData,  playerId, -1, -1))
+    legalMoves = legalMoves.concat(getMovesDirectional(piece, boardData,  playerId, -1, 0))
+    legalMoves = legalMoves.concat(getMovesDirectional(piece, boardData,  playerId, -1, 1))
+    legalMoves = legalMoves.concat(getMovesDirectional(piece, boardData,  playerId, 0, -1))
+    legalMoves = legalMoves.concat(getMovesDirectional(piece, boardData,  playerId, 0, 1))
+    legalMoves = legalMoves.concat(getMovesDirectional(piece, boardData,  playerId, 1, -1))
+    legalMoves = legalMoves.concat(getMovesDirectional(piece, boardData,  playerId, 1, 0))
+    legalMoves = legalMoves.concat(getMovesDirectional(piece, boardData,  playerId, 1, 1))
     return legalMoves
 }
 
-const legalMovesBishop = (piece, boardData) => {
+const legalMovesBishop = (piece, boardData, playerId) => {
     let legalMoves = []
-    legalMoves = legalMoves.concat(getMovesDirectional(piece, boardData, -1, -1))
-    legalMoves = legalMoves.concat(getMovesDirectional(piece, boardData, -1, 1))
-    legalMoves = legalMoves.concat(getMovesDirectional(piece, boardData, 1, -1))
-    legalMoves = legalMoves.concat(getMovesDirectional(piece, boardData, 1, 1))
+    legalMoves = legalMoves.concat(getMovesDirectional(piece, boardData,  playerId, -1, -1))
+    legalMoves = legalMoves.concat(getMovesDirectional(piece, boardData,  playerId, -1, 1))
+    legalMoves = legalMoves.concat(getMovesDirectional(piece, boardData,  playerId, 1, -1))
+    legalMoves = legalMoves.concat(getMovesDirectional(piece, boardData,  playerId, 1, 1))
     return legalMoves
 }
 
-const legalMovesRook = (piece, boardData) => {
+const legalMovesRook = (piece, boardData, playerId) => {
     let legalMoves = []
-    legalMoves = legalMoves.concat(getMovesDirectional(piece, boardData, 0, -1))
-    legalMoves = legalMoves.concat(getMovesDirectional(piece, boardData, 0, 1))
-    legalMoves = legalMoves.concat(getMovesDirectional(piece, boardData, -1, 0))
-    legalMoves = legalMoves.concat(getMovesDirectional(piece, boardData, 1, 0))
+    legalMoves = legalMoves.concat(getMovesDirectional(piece, boardData,  playerId, 0, -1))
+    legalMoves = legalMoves.concat(getMovesDirectional(piece, boardData,  playerId, 0, 1))
+    legalMoves = legalMoves.concat(getMovesDirectional(piece, boardData,  playerId, -1, 0))
+    legalMoves = legalMoves.concat(getMovesDirectional(piece, boardData,  playerId, 1, 0))
     return legalMoves
 }
 
-const legalMovesKnight = (piece, boardData) => {
+const legalMovesKnight = (piece, boardData, playerId) => {
     let directions = [[2, 1], [2, -1], [-2, 1], [-2, -1], [1, 2], [1, -2], [-1, 2], [-1, -2]]
-    return getMovesDirectionalSingle(piece, boardData, directions)
+    return getMovesDirectionalSingle(piece, boardData,  playerId, directions)
 }
-
-const legalMovesKing = (piece, boardData) => {
+ 
+const legalMovesKing = (piece, boardData, playerId) => {
     let directions = [[0, 1], [0, -1], [1, 0], [-1, 0]]
-    return getMovesDirectionalSingle(piece, boardData, directions)
+    return getMovesDirectionalSingle(piece, boardData,  playerId, directions)
 }
 
-const getMovesDirectional = (piece, boardData, vX, vY) => {
+const getMovesDirectional = (piece, boardData, playerId, vX, vY) => {
     let legalMoves = []
     for (i = 1; (i < 8); i++) {
         let cordCol = piece.col + vX * i
@@ -83,7 +95,7 @@ const getMovesDirectional = (piece, boardData, vX, vY) => {
         if (!notOutOfBounds(cordCol, cordRow)) {
             break;
         }
-        let currTileState = tileOcupiedState(boardData, cordCol, cordRow)
+        let currTileState = tileOcupiedState(boardData, cordCol, cordRow, playerId)
         if (currTileState == 1) {
             legalMoves.push([cordCol, cordRow, 1])
         } else if (currTileState == 2) {
@@ -96,14 +108,14 @@ const getMovesDirectional = (piece, boardData, vX, vY) => {
     return legalMoves
 }
 
-const getMovesDirectionalSingle = (piece, boardData, directions) => {
+const getMovesDirectionalSingle = (piece, boardData, playerId, directions) => {
     let legalMoves = []
 
     directions.forEach(move => {
         let cordCol = piece.col + move[0]
         let cordRow = piece.row + move[1]
         if (notOutOfBounds(cordCol, cordRow)) {
-            let currTileState = tileOcupiedState(boardData, cordCol, cordRow)
+            let currTileState = tileOcupiedState(boardData, cordCol, cordRow, playerId)
             if (currTileState == 1) {
                 legalMoves.push([cordCol, cordRow, 1])
             } else if (currTileState == 3) {
@@ -115,12 +127,17 @@ const getMovesDirectionalSingle = (piece, boardData, directions) => {
 }
 
 const tileOcupiedState = (boardData, colum, row, playerId) => {
+    console.log(boardData, colum, row, playerId)
     tile = searchT(boardData, colum, row)
+    console.log("22",tile, playerId)
     if (!tile) {
+        console.log("Empty tile")
         return 1
     } else if (tile['id'] == playerId) {
+        console.log("Friendly tile")
         return 2
     } else {
+        console.log("Enemy tile")
         return 3
     }
 
