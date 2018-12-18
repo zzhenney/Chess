@@ -7,7 +7,10 @@
     "start:dev": "NODE_ENV=development DEBUG=chessgame:* nodemon ./bin/www",
     "db:create:migration": "sequelize migration:generate --name",
     "db:migrate": "sequelize db:migrate",
-    "db:rollback": "sequelize db:migrate:undo"
+    "db:rollback": "sequelize db:migrate:undo",
+    "build": "loadGameState.js -o ./public/loadgameBundle.js -v",
+    "postinstall": "npm run build"
+
   },
   "dependencies": {
     "bootstrap": "^4.1.3",
