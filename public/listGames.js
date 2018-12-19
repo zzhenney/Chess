@@ -7,6 +7,8 @@ const appendOpenGames = () => {
 	api.listGames()
 		.then(response => {
 			console.log(response[0].game_id);
+			var parentNode = document.getElementById("current-games");
+			parentNode.innerHTML = '';
 			response.forEach(function(id){
 				var game = document.createElement('a');
 				game.innerHTML = "Game " + id.game_id
@@ -23,7 +25,9 @@ const appendOpenGames = () => {
 const appendCurrentGames = () => {
 	api.listCurrentGames()
 		.then(response => {
-			response = response.slice(0, 5);
+			var parentNode = document.getElementById("view-games");
+			parentNode.innerHTML = '';
+			
 			response.forEach(function(id){
 				var game = document.createElement('a');
 				game.innerHTML = "Game " + id.game_id
