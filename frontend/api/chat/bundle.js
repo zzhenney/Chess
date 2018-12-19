@@ -8,10 +8,6 @@ const requestData = {
 }
 
 
-
-
-
-
 const initRequestData = (method, body) => {
 	requestData.method = method;
 	requestData.body = body;

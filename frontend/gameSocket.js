@@ -1,7 +1,6 @@
 const socket = require('./socket.js');
 const api = require('./api/index.js') ;
 
-
 const initGameSocket = (gameId) => {
     console.log(`Init game socket move_${gameId}`)
     socket.on(`move_${gameId}`, function(){

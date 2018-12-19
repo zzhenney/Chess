@@ -16,9 +16,7 @@ var session = require('./config/session');
 //require('./config/passport')(passport);
 
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 var gameRouter = require('./routes/game');
-var testsRouter = require('./routes/tests');
 var loginRouter = require('./routes/login');
 
 
@@ -81,9 +79,6 @@ app.use('/register', registerRouter);
 app.use('/api', gamesAPIRouter);
 app.use('/api/chat', chatAPIRouter);
 app.use('/api/users', userAPIRouter);
-
-//require('./app/routes.js')(app, passport);
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

@@ -36,20 +36,13 @@ router.get('/joinGame/:id', function(req, res, next) {
   		const user = req.session.passport.user;
   		const game = req.params.id;
 
-  		//console.log("user: " + user + " game: " + game);
-
   		Game.joinGame(user, game)
   			.then(() => {
-  				//console.log("joining game: " + game);
 
   				res.redirect(`/game/${game}`);
-  				//res.redirect("/users");
-  				//init chat
   				
   			})
   			.catch(err => {
-
-  				//console.log("Join Game API Route Err: " + err);
 
   				res.redirect("/");
   			})  	
@@ -65,13 +58,9 @@ router.get('/getGameInfo/:id', function(req, res, next) {
 	if(req.isAuthenticated()){
 		Game.getGameInfo(game)
   			.then(data => {
-          //console.log(data);
   				res.send(data);
   			})
   			.catch(err => {
-
-  				//console.log("49 Get Game Info API Route Err: " + err);
-
   				res.redirect("/");
   			})
 	}
@@ -86,16 +75,12 @@ router.get('/listGames', function(req, res, next) {
   		
   		Game.listGames()
   			.then(games => {
-  				//console.log("Open Games: " + games);
-  				//res.send(games);
-          //console.log("res.json() " + res);
-          res.json(games);
-
-  				//init chat
   				
+          res.json(games);
+	
   			})
   			.catch(err => {
-  				//console.log("List Game API Route Err: " + err);
+  				
   				res.redirect("/");
   			})  	
 	}
@@ -109,16 +94,11 @@ router.get('/listCurrentGames/', function(req, res, next) {
       const user = req.session.passport.user;
       Game.listCurrentGames(user)
         .then(games => {
-          //console.log("Open Games: " + games);
-          //res.send(games);
-          //console.log("res.json() " + res);
-          res.json(games);
 
-          //init chat
+          res.json(games);
           
         })
         .catch(err => {
-          //console.log("List Game API Route Err: " + err);
           res.redirect("/");
         })    
   }
@@ -134,10 +114,8 @@ router.get('/leaveGame/:id', function(req, res, next) {
       Game.leaveGame(game, user)
       res.redirect('/')
 
-        
         .catch(err => {
           console.log("Leave Game API Route Err: " + err);
-          //res.redirect("/");
         })    
   }
   else{

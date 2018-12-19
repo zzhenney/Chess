@@ -6,11 +6,6 @@ const requestData = {
 	}
 }
 
-
-
-
-
-
 const initRequestData = (method, body) => {
 	requestData.method = method;
 	requestData.body = JSON.stringify({body: body});
@@ -25,21 +20,13 @@ const checkResponseCode = response => {
 };
 
 const request = (url, requestData) => {
-	console.log("REQUEST: " + requestData.body);
-	//console.log("REQUEST: " + requestData.json);
 	fetch(url, requestData).then(checkResponseCode);
 
 };
 
 const sendMessage = (gameId, message) => {
-	console.log(`message: ${message}`);
-	console.log("PRE: " + requestData.body);
 	initRequestData('post', message);
-	console.log("POST INIT: " +requestData);
 	request(`/api/chat/${gameId}`, requestData);
-
-	
-
 };
 
 module.exports = {sendMessage};
