@@ -10,7 +10,6 @@
     "db:rollback": "sequelize db:migrate:undo",
     "build": "browserify ./public/loadGameState.js -o ./public/loadgameBundle.js -v",
     "postinstall": "npm run build"
-
   },
   "dependencies": {
     "bootstrap": "^4.1.3",
