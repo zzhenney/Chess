@@ -43,20 +43,7 @@ router.post('/makemove', async function (req, res, next) {
     await board.movePiece(gameid, fromcol, fromrow, tocol, torow, userid)
       .then(function (message) {
         console.log(message)
-        if(message === 'Move successfull'){
-          status = 'success'
-        }else{
-          status = 'failed'
-          returncode = 500
-        }
-        res.status(returncode)
-          .json({
-            status: status,
-            successfull: 'success',
-            message: message
-          });
-      }).catch(function (err) {
-        console.log(err)
+        res.json({message})
       })
   }else{
     console.log("Failed, didnt revice parameters")
