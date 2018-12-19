@@ -40,8 +40,6 @@ router.post('/makemove', async function (req, res, next) {
 
     let success = await board.movePiece(gameid, fromcol, fromrow, tocol, torow, userid)
       .then(function (success) {
-        console.log(`move_${gameid}`)
-        io.emit(`move_${gameid}`);
         res.status(200)
           .json({
             status: 'success',
