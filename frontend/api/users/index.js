@@ -7,10 +7,6 @@ const requestData = {
 }
 
 
-
-
-
-
 const checkResponseCode = response => {
 	if(response.ok){	
 		return response;

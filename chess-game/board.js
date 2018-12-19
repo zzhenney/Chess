@@ -1,6 +1,7 @@
 var moves = require('./moves.js')
 const db = require('../db');
 const logic = require('./logic');
+const {io} = require('../messaging');
 
 const validatePossibleMove = async (possibleMoves, tocolum, torow) => {
     if (possibleMoves.length === 0) return false;
@@ -241,7 +242,8 @@ module.exports = {
         } else {
             return "Field is blocked Cannot move, doing nothing"
         }
-        return "Move not successfull"
+        io.emit(`move_${game_id}`);
+        return moveSuccess
     },
     getAllPossibleForPiece: async function (gameId, column, row) {
         console.log(getAllPieces(3))

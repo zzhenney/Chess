@@ -1,6 +1,7 @@
 var express = require('express');
 var router = express.Router();
 const board = require('../chess-game/board')
+const {io} = require('../messaging');
 
 router.get('/:id', (request, response) => {
   if (request.isAuthenticated()) {
@@ -37,13 +38,16 @@ router.post('/makemove', async function (req, res, next) {
     const tocol = req.body.tocol
     const torow = req.body.torow
 
-    console.log("Game id" , gameid)
-    let status = 'success'
-    let returncode = 200
-    await board.movePiece(gameid, fromcol, fromrow, tocol, torow, userid)
-      .then(function (message) {
-        console.log(message)
-        res.json({message})
+    let success = await board.movePiece(gameid, fromcol, fromrow, tocol, torow, userid)
+      .then(function (success) {
+        res.status(200)
+          .json({
+            status: 'success',
+            successfull: success,
+            message: message
+          });
+      }).catch(function (err) {
+        console.log(err)
       })
   }else{
     console.log("Failed, didnt revice parameters")
@@ -95,20 +99,5 @@ router.get('/:gameid', function (req, res, next) {
   res.json(boardState)
 });
 
-
-/*
-router.get('/api/joinGame/:id', (request, response) => {
-	if(request.isAuthenticated()){
-		const id = request.params.id;
-		response.redirect(`/api/joinGame/${id}`);
-	}
-});
-router.get('/api/createGame', (request, response) => {
-	if(request.isAuthenticated()){
-		//const id = request.params.id;
-		response.redirect('/api/createGame');
-	}
-});
-*/
 
 module.exports = router;
