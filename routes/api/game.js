@@ -113,7 +113,6 @@ router.get('/leaveGame/:id', function(req, res, next) {
       const game = req.params.id;
       Game.leaveGame(game, user)
       res.redirect('/')
-
         .catch(err => {
           console.log("Leave Game API Route Err: " + err);
         })    

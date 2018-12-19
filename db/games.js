@@ -40,13 +40,11 @@ exports.joinGame = (userId, gameId) => {
 		})
 };
 
-//getGame 
 const getGame = gameId => {
 	return db.any("SELECT * from game_users WHERE game_id = $1", [gameId]);
 };
 
 
-//const leaveGame
 exports.listGames = () => {
 
 	return db.any("SELECT game_id FROM game_users GROUP BY game_id HAVING COUNT(*) = 1")
