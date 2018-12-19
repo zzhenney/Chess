@@ -38,12 +38,21 @@ router.post('/makemove', async function (req, res, next) {
     const torow = req.body.torow
 
     console.log("Game id" , gameid)
-    let success = await board.movePiece(gameid, fromcol, fromrow, tocol, torow, userid)
-      .then(function (success) {;
-        res.status(200)
+    let status = 'success'
+    let returncode = 200
+    await board.movePiece(gameid, fromcol, fromrow, tocol, torow, userid)
+      .then(function (message) {
+        console.log(message)
+        if(message === 'Move successfull'){
+          status = 'success'
+        }else{
+          status = 'failed'
+          returncode = 500
+        }
+        res.status(returncode)
           .json({
-            status: 'success',
-            successfull: success,
+            status: status,
+            successfull: 'success',
             message: message
           });
       }).catch(function (err) {

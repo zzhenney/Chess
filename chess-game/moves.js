@@ -40,8 +40,14 @@ const legalMovesPawn = (piece, boardData, gameInfo) => {
     if(tileStateAttackLeft === 3){
         legalMoves.push([piece.col-1, piece.row + (1 * v), tileStateAttackLeft])
     }
+    let tileStateAttackPassantLeft = tileOcupiedState(boardData, piece.col-1, piece.row, playerId)
+    if(tileStateAttackPassantLeft == 3){
+        let passantEnemy = searchT(boardData, piece.col-1, piece.row)
+        if(passantEnemy != undefined && passantEnemy.name === 'pawn' && passantEnemy.state === 2){
+            legalMoves.push([piece.col-1, piece.row, tileStateAttackPassantLeft])
+        }
+    }
     console.log(legalMoves)
-    //Ignoring passant situation for to simplyfy it although most of the code for that situation is already written
     return legalMoves
 }
 
@@ -83,7 +89,7 @@ const legalMovesKnight = (piece, boardData, playerId) => {
 }
  
 const legalMovesKing = (piece, boardData, playerId) => {
-    let directions = [[0, 1], [0, -1], [1, 0], [-1, 0]]
+    let directions = [[0, 1], [0, -1], [1, 0], [-1, 0],[1, 1], [-1, -1],[1, -1], [-1, 1, [1, 0], [-1, 0]]]
     return getMovesDirectionalSingle(piece, boardData,  playerId, directions)
 }
 
@@ -129,7 +135,7 @@ const getMovesDirectionalSingle = (piece, boardData, playerId, directions) => {
 const tileOcupiedState = (boardData, colum, row, playerId) => {
     console.log(boardData, colum, row, playerId)
     tile = searchT(boardData, colum, row)
-    console.log("22",tile, playerId)
+    console.log("22",tile, playerId )
     if (!tile) {
         console.log("Empty tile")
         return 1
@@ -163,31 +169,4 @@ module.exports = {
     searchTile: function (boardData, colum, row) {
         return searchT(boardData, colum, row)
     }
-
 }
-
-   /* pawn_enPassant: function (colum, row, iswhite, gameId) {
-        if (board.notOutOfBounds(colum, row)) {
-            board.getPieceAt(gameId, colum, row).then(piece => {
-                if (piece.name === 'pawn' && piece.state === 2 && !iswhite) {
-                    return [colum, row]
-                } else {
-                    return null
-                }
-            })
-        }
-        return null
-    },
-/*
-    pawn_legal_passant_moves: function (playerColor, cordX, cordY) {
-        let listOfPassantMoves
-        if (board_interaction.piece_is_enemy_passant_pawn(cordX + 1, cordY)) {
-            listOfPassantMoves.push([cordX + 1, cordY])
-        }
-        if (board_interaction.piece_is_enemy_passant_pawn(cordX - 1, cordY)) {
-            listOfPassantMoves.push([cordX - 1, cordY])
-        }
-        return listOfPassantMoves
-    },
-
-    }*/

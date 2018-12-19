@@ -75,22 +75,15 @@ const move = async (game_id, piece, tocolumn, torow, state) => {
     console.log(piece)
     console.log(game_id, piece.piece_id, tocolumn, torow, state)
     if(game_id != null && piece.piece_id != null && tocolumn !=null && torow != null){
-    return db.none('update game_pieces set col = $3, row = $4, state = $5 where "game_id" = $1 and "piece_id" = $2', [game_id, piece.piece_id, tocolumn, torow, state])
-        .then(async (data) => {
-            console.log("Move successful", data)
-            console.log(piece)
-            let turnChanged = await changeTurn(game_id, piece.userid)
-            return true;
-        }).catch(() => {
-            console.log("Move failed")
-            return false;
-        })
+        db.any('update game_pieces set col = $3, row = $4, state = $5 where "game_id" = $1 and "piece_id" = $2', [game_id, piece['piece_id'], tocolumn, torow, state])
+        let turnChanged = await changeTurn(game_id, piece.userid)
+        return "Successfully moved the piece"
     }else{
         console.log("Cannot move, lacks input data")
         console.log(game_id, piece.piece_id, tocolumn, torow)
         return false;
     }
-    return false
+    return "Move failed"
 }
 const tilesisBlocked = async (game_id, tileCords) => {
     db.tx(t => {
@@ -139,29 +132,45 @@ const isPlayersTurn = (playerId, gameInfo) =>{
 }
 
 const checkIfInCheck = (fromcol, fromrow, tocol, torow, boardData, gameInfo) =>{
+    console.log("Checking if in check")
     let board = boardData.slice()
-    let pieceToMove = (possibleMoves.find(function (pice) {
-        return (pice[0] == fromcol && pice[1] == fromrow)
+    console.log(fromcol, fromrow, tocol, torow, boardData, gameInfo)
+    let pieceToMove = (board.find(function (pice) {
+        return (pice.col == fromcol && pice.row == fromrow)
     }))
     console.log(pieceToMove)
     pieceToMove.col = tocol
     pieceToMove.row = torow
-    //gameInfo['userid']
     let possibleEnemyAttackMoves = []
-    pieceToMove.forEach(piece =>{
+    board.forEach(piece =>{
         if(piece.userid != gameInfo['userid']){
-            getAllLegalMoves(piece, board,gameInfo).forEach(m=>{
+            moves.getAllLegalMoves(piece, board,gameInfo).forEach(m=>{
                 if(m[2] === 3){
                     possibleEnemyAttackMoves.push(m)
                 }
             })
         }
     })
-    let friendlyKingCord
-    friendlyKingCord[0] =  
-    possibleEnemyAttackMoves.forEach(move=>{
-        
+    console.log("b",board)
+    let friendlyKing = board.find(piece=>{
+        console.log("p", piece, piece['userid'] , gameInfo['userid'], piece['name'])
+        console.log(piece['userid'] === gameInfo['userid'], piece['userid'], gameInfo['userid'])
+        console.log(piece['name'] === 'king', piece['name'])
+        if(piece['userid'] === gameInfo['userid'] && piece['name'] === 'king'){
+            console.log("Found friendly king")
+            return piece
+        }
     })
+    console.log("Friendly king",friendlyKing)
+    return possibleEnemyAttackMoves.map(move=>{
+        if(move[0] == friendlyKing['col'] && move[1] == friendlyKing['row']){
+            console.log("King is in check, aborting move")
+            return true
+        }
+        else{
+            console.log("King is not in check, continuing")
+        }
+    }).filter(function(item){return item;})[0]
 }
 
 
@@ -177,25 +186,25 @@ module.exports = {
         gameInfo['userid'] = userid
         let pieces = await boarddata[1]
         console.log("Is current players turn: ", isPlayersTurn(userid, gameInfo))
-        if(!isPlayersTurn(userid, gameInfo)) return false;
+        if(!isPlayersTurn(userid, gameInfo)) return "Currently isn't the current players turn, please wait for the other player to make a move";
         pieces = await makePieceObject(pieces)
         
         console.log("Gameinfo: ", gameInfo)
         console.log("Pieces:", pieces)
          if(!(boarddata)){
             console.log("couldnt find boarddata")
-            return false
+            return "Internal Failule getting data"
          } 
          console.log("Getting piece")
         let piece = moves.searchTile(pieces, fromcolumn, fromrow)
         if(!piece){
             console.log("No piece found")
-         return false
+         return "Couldn't find pice on cordinate. Empty tile?"
         }
         if(piece.userid != userid) {
             console.log(piece.userid, userid)
             console.log("Move denied as this piece is not owned by the current user")
-            return false
+            return "Move denied as this piece is not owned by the current user"
         }else{
             console.log("Move allowed for user", userid)
         }
@@ -209,18 +218,30 @@ module.exports = {
         console.log("Valid", isValid)
         let state = 1
 
-        //let inCheck = checkIfInCheck(fromcol, fromrow, tocolumn, torow, boarddata, gameInfo)
+        let inCheck = checkIfInCheck(piece.col, piece.row, tocolumn, torow, pieces, gameInfo)
+        if(inCheck){
+            return "Move setting users king in check. Aborting please make another move, or surender"
+        }
+        console.log("Valid",isValid)
+        console.log(inCheck)
         if (isValid == 3) {
             console.log("Attacking with piece")
             console.log(game_id, piece, pieceAtTarget)
             let moveSuccess = await moveAttack(game_id, piece, pieceAtTarget, state)
+            console.log("Move success", moveSuccess)
+            return "Attacking piece successfull"
         } else if (isValid === 1) {
             console.log("Moving piece")
+            if(piece.name === 'pawn' && piece.state === 0 && Math.abs(piece.row - torow) === 2){
+                //Special state for pawn after it have moved 2 steps, enabeling it to be attacked with the passant attack by other pawns
+                state = 2
+            }
             let moveSuccess = await move(game_id, piece, tocolumn, torow, state)
+            return "Successfully moved the pice"
         } else {
-            return false
+            return "Field is blocked Cannot move, doing nothing"
         }
-        return moveSuccess
+        return "Move not successfull"
     },
     getAllPossibleForPiece: async function (gameId, column, row) {
         console.log(getAllPieces(3))
