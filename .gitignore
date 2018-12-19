@@ -49,6 +49,10 @@ nbproject
 composer.lock.env
 
 
+
 # Node_modules #
 ################
+.vscode/
 node_modules/
+
+

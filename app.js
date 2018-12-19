@@ -1,16 +1,42 @@
-require('dotenv').load();
+
+if(process.env.NODE_ENV === 'development'){
+  require('dotenv').config();
+}
 
 var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
-var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 
+var flash = require('connect-flash');
+const passport = require('./config/passport');
+var session = require('./config/session');
+
+//require('./config/passport')(passport);
+
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
 var gameRouter = require('./routes/game');
-var testsRouter = require('./routes/tests');
+var loginRouter = require('./routes/login');
+
+
+var chessboardRouter = require('./routes/chessboard');
+var registrationRouter = require('./routes/registration');
+var menuRouter = require('./routes/menu');
+var rulesRouter = require('./routes/rules');
+var chatRouter = require('./routes/chat');
+var scoreboardRouter = require('./routes/scoreboard');
+var gameRouter = require('./routes/game');
+
+var logoutRouter = require('./routes/logout');
+var registerRouter = require('./routes/register');
+
+var gamesAPIRouter = require('./routes/api/game');
+var chatAPIRouter = require('./routes/api/chat');
+var userAPIRouter = require('./routes/api/users');
+
+
+
 console.log(indexRouter);
 
 var app = express();
@@ -22,13 +48,35 @@ app.set('view engine', 'pug');
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist/css/'));
+app.use('/scripts', express.static(__dirname + '/frontend'));
+
+app.use(flash());
+//express-session
+app.use(session);
+//passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
 app.use('/game', gameRouter);
-app.use('/tests', testsRouter);
+app.use('/login', loginRouter);
+
+app.use('/chessboard', chessboardRouter);
+app.use('/registration', registrationRouter);
+app.use('/menu', menuRouter);
+app.use('/rules', rulesRouter);
+app.use('/chat', chatRouter);
+app.use('/scoreboard', scoreboardRouter);
+app.use('/game', gameRouter);
+
+app.use('/logout', logoutRouter);
+app.use('/register', registerRouter);
+
+app.use('/api', gamesAPIRouter);
+app.use('/api/chat', chatAPIRouter);
+app.use('/api/users', userAPIRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -47,3 +95,4 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
+
