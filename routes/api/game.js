@@ -1,94 +1,74 @@
 const express = require('express');
 
 const router = express.Router();
+
+const isAuthenticated = require('../../auth/isAuthenticated');
 const Game = require('../../db/games');
 
-router.get('/createGame', (req, res) => {
-  if (req.isAuthenticated()) {
-    const { user } = req.session.passport;
-    Game.createGame(user)
-      .then(id => {
-        res.redirect(`/game/${id.game_id}`);
-      })
-      .catch(() => {
-        res.redirect('/');
-      });
-  } else {
-    res.redirect('/login');
-  }
+router.get('/createGame', isAuthenticated, (request, response) => {
+  const { user } = request.session.passport;
+
+  Game.createGame(user)
+    .then(id => {
+      response.redirect(`/game/${id.game_id}`);
+    })
+    .catch(() => {
+      response.redirect('/');
+    });
 });
 
-router.get('/joinGame/:id', (req, res) => {
-  if (req.isAuthenticated()) {
-    const { user } = req.session.passport;
-    const game = req.params.id;
+router.get('/joinGame/:id', isAuthenticated, (request, response) => {
+  const { user } = request.session.passport;
+  const game = request.params.id;
 
-    Game.joinGame(user, game)
-      .then(() => {
-        res.redirect(`/game/${game}`);
-      })
-      .catch(() => {
-        res.redirect('/');
-      });
-  } else {
-    res.redirect('/login');
-  }
+  Game.joinGame(user, game)
+    .then(() => {
+      response.redirect(`/game/${game}`);
+    })
+    .catch(() => {
+      response.redirect('/');
+    });
 });
 
-router.get('/getGameInfo/:id', (req, res) => {
-  const game = req.params.id;
-  if (req.isAuthenticated()) {
-    Game.getGameInfo(game)
-      .then(data => {
-        res.send(data);
-      })
-      .catch(() => {
-        res.redirect('/');
-      });
-  } else {
-    res.redirect('/');
-  }
+router.get('/getGameInfo/:id', isAuthenticated, (request, response) => {
+  const game = request.params.id;
+
+  Game.getGameInfo(game)
+    .then(data => {
+      response.send(data);
+    })
+    .catch(() => {
+      response.redirect('/');
+    });
 });
 
-router.get('/listGames', (req, res) => {
-  if (req.isAuthenticated()) {
-    Game.listGames()
-      .then(games => {
-        res.json(games);
-      })
-      .catch(() => {
-        res.redirect('/');
-      });
-  } else {
-    res.redirect('/login');
-  }
+router.get('/listGames', isAuthenticated, (request, response) => {
+  Game.listGames()
+    .then(games => {
+      response.json(games);
+    })
+    .catch(() => {
+      response.redirect('/');
+    });
 });
 
-router.get('/listCurrentGames/', (req, res) => {
-  if (req.isAuthenticated()) {
-    const { user } = req.session.passport;
+router.get('/listCurrentGames/', isAuthenticated, (request, response) => {
+  const { user } = request.session.passport;
 
-    Game.listCurrentGames(user)
-      .then(games => {
-        res.json(games);
-      })
-      .catch(() => {
-        res.redirect('/');
-      });
-  } else {
-    res.redirect('/login');
-  }
+  Game.listCurrentGames(user)
+    .then(games => {
+      response.json(games);
+    })
+    .catch(() => {
+      response.redirect('/');
+    });
 });
 
-router.get('/leaveGame/:id', (req, res) => {
-  if (req.isAuthenticated()) {
-    const { user } = req.session.passport;
-    const game = req.params.id;
-    Game.leaveGame(game, user);
-    res.redirect('/');
-  } else {
-    res.redirect('/login');
-  }
+router.get('/leaveGame/:id', isAuthenticated, (request, response) => {
+  const { user } = request.session.passport;
+  const game = request.params.id;
+  Game.leaveGame(game, user);
+  response.redirect('/');
 });
 
 module.exports = router;
