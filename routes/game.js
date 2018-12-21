@@ -38,7 +38,7 @@ router.post('/makemove', async (request, response) => {
   board
     .movePiece(gameid, fromcol, fromrow, tocol, torow, userid)
     .then(successfull => {
-      response.status(200).json({
+      response.json({
         status: 'success',
         successfull
       });
@@ -54,11 +54,11 @@ router.post('/moves', (request, response) => {
   if (col !== undefined && row !== undefined && gameid !== undefined) {
     board
       .getAllPossibleForPiece(1, 1, 2)
-      .then(legalMoves => {
-        response.status(200).json({
+      .then(legalmoves => {
+        response.json({
           status: 'success',
-          legalmoves: legalMoves,
-          message: legalMoves
+          legalmoves,
+          message: legalmoves
             ? 'Retrieved all legal move for selected piece'
             : 'Could not retrieve legal moves'
         });
