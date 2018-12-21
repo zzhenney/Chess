@@ -17,7 +17,6 @@ const indexRouter = require('./routes/index');
 const loginRouter = require('./routes/login');
 
 const registrationRouter = require('./routes/registration');
-const menuRouter = require('./routes/menu');
 const rulesRouter = require('./routes/rules');
 const scoreboardRouter = require('./routes/scoreboard');
 const gameRouter = require('./routes/game');
@@ -54,7 +53,6 @@ app.use('/game', gameRouter);
 app.use('/login', loginRouter);
 
 app.use('/registration', registrationRouter);
-app.use('/menu', menuRouter);
 app.use('/rules', rulesRouter);
 app.use('/scoreboard', scoreboardRouter);
 app.use('/game', gameRouter);
