@@ -117,11 +117,13 @@ const appendCurrentGames = () => {
 
 const appendQuitGame = () => {
 	var element = document.createElement('a');
-	const gameId = document.getElementById('game-id').value
-	element.innerHTML = "Quit Game"
-	element.setAttribute('class', "btn btn-danger btn-sm btn-block" )
-	element.href = `/api/leaveGame/${gameId}`
-	document.getElementById('quitGame').appendChild(element)
+	if (document.getElementById('game-id').value != 0) {
+		const gameId = document.getElementById('game-id').value
+		element.innerHTML = "Quit Game"
+		element.setAttribute('class', "btn btn-danger btn-sm btn-block" )
+		element.href = `/api/leaveGame/${gameId}`
+		document.getElementById('quitGame').appendChild(element)
+	};
 }
 
 const gameInfo = () => {
