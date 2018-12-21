@@ -9,7 +9,8 @@
     "db:migrate": "sequelize db:migrate",
     "db:rollback": "sequelize db:migrate:undo",
     "build": "browserify ./public/loadGameState.js -o ./public/loadgameBundle.js -v",
-    "postinstall": "npm run build"
+    "postinstall": "npm run build",
+    "postinstall": "npm run db:migrate"
   },
   "husky": {
     "hooks": {
