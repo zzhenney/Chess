@@ -6,7 +6,7 @@ const isAuthenticated = require('../auth/isAuthenticated');
 
 router.get('/', isAuthenticated, (_, response) => {
 
-  response.render('index');
+  response.render('index', { id: 0 });
 
 });
 
