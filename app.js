@@ -16,16 +16,13 @@ const session = require('./config/session');
 const indexRouter = require('./routes/index');
 const loginRouter = require('./routes/login');
 
-const chessboardRouter = require('./routes/chessboard');
 const registrationRouter = require('./routes/registration');
 const menuRouter = require('./routes/menu');
 const rulesRouter = require('./routes/rules');
-const chatRouter = require('./routes/chat');
 const scoreboardRouter = require('./routes/scoreboard');
 const gameRouter = require('./routes/game');
 
 const logoutRouter = require('./routes/logout');
-const registerRouter = require('./routes/register');
 
 const gamesAPIRouter = require('./routes/api/game');
 const chatAPIRouter = require('./routes/api/chat');
@@ -56,16 +53,13 @@ app.use('/', indexRouter);
 app.use('/game', gameRouter);
 app.use('/login', loginRouter);
 
-app.use('/chessboard', chessboardRouter);
 app.use('/registration', registrationRouter);
 app.use('/menu', menuRouter);
 app.use('/rules', rulesRouter);
-app.use('/chat', chatRouter);
 app.use('/scoreboard', scoreboardRouter);
 app.use('/game', gameRouter);
 
 app.use('/logout', logoutRouter);
-app.use('/register', registerRouter);
 
 app.use('/api', gamesAPIRouter);
 app.use('/api/chat', chatAPIRouter);
