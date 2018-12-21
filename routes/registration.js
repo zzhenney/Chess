@@ -1,9 +1,9 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
+const router = express.Router();
 const passport = require('passport');
 
 router.get('/', (request, response) => {
-  response.render('registration', {message: request.flash('message')});
+  response.render('registration', { message: request.flash('message') });
 });
 
 router.post(

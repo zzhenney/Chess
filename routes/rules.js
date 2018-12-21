@@ -1,8 +1,9 @@
-var express = require('express');
-var router = express.Router();
+const express = require('express');
 
-router.get('/', function(req, res, next) {
-    res.render('rules');
+const router = express.Router();
+
+router.get('/', (_, response) => {
+  response.render('rules');
 });
 
 module.exports = router;

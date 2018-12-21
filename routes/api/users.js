@@ -1,17 +1,16 @@
-var express = require('express');
-var router = express.Router();
-const Users = require("../../db/users");
+const express = require('express');
 
+const router = express.Router();
+const Users = require('../../db/users');
 
-router.get('/scoreboard', function(req, res, next) {
-	Users.getUserScores()
-		.then((scores) => {
-			res.send(scores);
-		})
-		.catch(error => {
-			console.log("Scoreboard Route Error: " + error);
-		})
-    
+router.get('/scoreboard', (_, response) => {
+  Users.getUserScores()
+    .then(scores => {
+      response.send(scores);
+    })
+    .catch(() => {
+      response.status(500).end();
+    });
 });
 
 module.exports = router;
