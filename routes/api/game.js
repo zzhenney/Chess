@@ -1,127 +1,74 @@
-var express = require('express');
-var router = express.Router();
-const Game = require("../../db/games");
+const express = require('express');
 
-const {io} = require('../../messaging');
+const router = express.Router();
 
+const isAuthenticated = require('../../auth/isAuthenticated');
+const Game = require('../../db/games');
 
-router.get('/createGame', function(req, res, next) {
-	if(req.isAuthenticated()){
-  		const user = req.session.passport.user;
-  		Game.createGame(user)
-  			.then(id => {
+router.get('/createGame', isAuthenticated, (request, response) => {
+  const { user } = request.session.passport;
 
-  				//console.log("created game: " + id.game_id);
-  				//io.emit('new game');
-
-  				res.redirect(`/game/${id.game_id}`);
-  				//res.redirect("/users");
-  				//init chat
-  				
-  			})
-  			.catch(err => {
-
-  				//console.log("API Router Err: " + err);
-
-  				res.redirect("/");
-  			})	
-	}
-	else{
-		res.redirect('/login');
-	}
+  Game.createGame(user)
+    .then(id => {
+      response.redirect(`/game/${id.game_id}`);
+    })
+    .catch(() => {
+      response.redirect('/');
+    });
 });
 
-router.get('/joinGame/:id', function(req, res, next) {
-	if(req.isAuthenticated()){
-  		const user = req.session.passport.user;
-  		const game = req.params.id;
+router.get('/joinGame/:id', isAuthenticated, (request, response) => {
+  const { user } = request.session.passport;
+  const game = request.params.id;
 
-  		Game.joinGame(user, game)
-  			.then(() => {
-
-  				res.redirect(`/game/${game}`);
-  				
-  			})
-  			.catch(err => {
-
-  				res.redirect("/");
-  			})  	
-	}
-	else{
-		res.redirect('/login');
-
-	}
+  Game.joinGame(user, game)
+    .then(() => {
+      response.redirect(`/game/${game}`);
+    })
+    .catch(() => {
+      response.redirect('/');
+    });
 });
 
-router.get('/getGameInfo/:id', function(req, res, next) {
-	const game = req.params.id;
-	if(req.isAuthenticated()){
-		Game.getGameInfo(game)
-  			.then(data => {
-  				res.send(data);
-  			})
-  			.catch(err => {
-  				res.redirect("/");
-  			})
-	}
-	else{
-		res.redirect('/');
-	}
-	
+router.get('/getGameInfo/:id', isAuthenticated, (request, response) => {
+  const game = request.params.id;
+
+  Game.getGameInfo(game)
+    .then(data => {
+      response.send(data);
+    })
+    .catch(() => {
+      response.redirect('/');
+    });
 });
 
-router.get('/listGames', function(req, res, next) {
-	if(req.isAuthenticated()){
-  		
-  		Game.listGames()
-  			.then(games => {
-  				
-          res.json(games);
-	
-  			})
-  			.catch(err => {
-  				
-  				res.redirect("/");
-  			})  	
-	}
-	else{
-		res.redirect('/login');
-	}
+router.get('/listGames', isAuthenticated, (request, response) => {
+  Game.listGames()
+    .then(games => {
+      response.json(games);
+    })
+    .catch(() => {
+      response.redirect('/');
+    });
 });
 
-router.get('/listCurrentGames/', function(req, res, next) {
-  if(req.isAuthenticated()){
-      const user = req.session.passport.user;
-      Game.listCurrentGames(user)
-        .then(games => {
+router.get('/listCurrentGames/', isAuthenticated, (request, response) => {
+  const { user } = request.session.passport;
 
-          res.json(games);
-          
-        })
-        .catch(err => {
-          res.redirect("/");
-        })    
-  }
-  else{
-    res.redirect('/login');
-  }
+  Game.listCurrentGames(user)
+    .then(games => {
+      response.json(games);
+    })
+    .catch(() => {
+      response.redirect('/');
+    });
 });
 
-router.get('/leaveGame/:id', function(req, res, next) {
-  if(req.isAuthenticated()){
-      const user = req.session.passport.user;
-      const game = req.params.id;
-      Game.leaveGame(game, user)
-      res.redirect('/')
-        .catch(err => {
-          console.log("Leave Game API Route Err: " + err);
-        })    
-  }
-  else{
-    res.redirect('/login');
-  }
+router.get('/leaveGame/:id', isAuthenticated, (request, response) => {
+  const { user } = request.session.passport;
+  const game = request.params.id;
+  Game.leaveGame(game, user);
+  response.redirect('/');
 });
-
-
 
 module.exports = router;

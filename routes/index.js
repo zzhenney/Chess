@@ -1,18 +1,11 @@
-var express = require('express');
-var router = express.Router();
-const Game = require("../db/games");
-//const passport = require('../config/passport');
+const express = require('express');
 
-/* GET home page. */
-router.get('/', function(req, res, next) {
-  if(req.isAuthenticated()){
-		res.render('index', {id: 0 });	
-	}
-	else{
-		res.redirect('/login');
-	}
+const router = express.Router();
+
+const isAuthenticated = require('../auth/isAuthenticated');
+
+router.get('/', isAuthenticated, (_, response) => {
+  response.render('index', { id: 0 });
 });
-
-
 
 module.exports = router;
