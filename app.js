@@ -1,47 +1,38 @@
-
-if(process.env.NODE_ENV === 'development'){
+if (process.env.NODE_ENV === 'development') {
+  /* eslint-disable */
   require('dotenv').config();
+  /* eslint-enable */
 }
 
-var createError = require('http-errors');
-var express = require('express');
-var path = require('path');
-var logger = require('morgan');
+const createError = require('http-errors');
+const express = require('express');
+const path = require('path');
+const logger = require('morgan');
 
-
-var flash = require('connect-flash');
+const flash = require('connect-flash');
 const passport = require('./config/passport');
-var session = require('./config/session');
+const session = require('./config/session');
 
-//require('./config/passport')(passport);
+const indexRouter = require('./routes/index');
+const loginRouter = require('./routes/login');
 
-var indexRouter = require('./routes/index');
-var gameRouter = require('./routes/game');
-var loginRouter = require('./routes/login');
+const chessboardRouter = require('./routes/chessboard');
+const registrationRouter = require('./routes/registration');
+const menuRouter = require('./routes/menu');
+const rulesRouter = require('./routes/rules');
+const chatRouter = require('./routes/chat');
+const scoreboardRouter = require('./routes/scoreboard');
+const gameRouter = require('./routes/game');
 
+const logoutRouter = require('./routes/logout');
+const registerRouter = require('./routes/register');
 
-var chessboardRouter = require('./routes/chessboard');
-var registrationRouter = require('./routes/registration');
-var menuRouter = require('./routes/menu');
-var rulesRouter = require('./routes/rules');
-var chatRouter = require('./routes/chat');
-var scoreboardRouter = require('./routes/scoreboard');
-var gameRouter = require('./routes/game');
+const gamesAPIRouter = require('./routes/api/game');
+const chatAPIRouter = require('./routes/api/chat');
+const userAPIRouter = require('./routes/api/users');
 
-var logoutRouter = require('./routes/logout');
-var registerRouter = require('./routes/register');
+const app = express();
 
-var gamesAPIRouter = require('./routes/api/game');
-var chatAPIRouter = require('./routes/api/chat');
-var userAPIRouter = require('./routes/api/users');
-
-
-
-console.log(indexRouter);
-
-var app = express();
-
-// view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
@@ -49,13 +40,15 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(express.static(path.join(__dirname, 'public')));
-app.use('/bootstrap', express.static(__dirname + '/node_modules/bootstrap/dist/css/'));
-app.use('/scripts', express.static(__dirname + '/frontend'));
+app.use(
+  '/bootstrap',
+  express.static(`${__dirname}/node_modules/bootstrap/dist/css/`)
+);
+
+app.use('/scripts', express.static(`${__dirname}/frontend`));
 
 app.use(flash());
-//express-session
 app.use(session);
-//passport
 app.use(passport.initialize());
 app.use(passport.session());
 
@@ -79,12 +72,12 @@ app.use('/api/chat', chatAPIRouter);
 app.use('/api/users', userAPIRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use((req, res, next) => {
   next(createError(404));
 });
 
 // error handler
-app.use(function(err, req, res, next) {
+app.use((err, req, res) => {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('.env') === 'development' ? err : {};
@@ -95,4 +88,3 @@ app.use(function(err, req, res, next) {
 });
 
 module.exports = app;
-
